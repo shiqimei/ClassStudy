@@ -1,0 +1,51 @@
+/* pages/about/index.wxss */
+page {
+    background: rgba(249, 249, 251,1);
+}
+
+.container {
+  padding:50rpx 0;
+}
+
+button {
+  margin-bottom: 50rpx;
+}
+
+.userinfo {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.userinfo-avatar {
+  display: block;
+}
+
+.userinfo-nickname {
+  color: #666;
+}
+
+.userinfo-avatar {
+  width: 128rpx;
+  height: 128rpx;
+  margin: 20rpx;
+  border-radius: 50%;
+}
+
+.userinfo-nickname {
+  color: #aaa;
+}
+
+.list {
+  color: #818181;
+  line-height: 40px;
+  height: 40px;
+  width: 93%;
+  background: #fff;
+  box-shadow:0 0 0 0.5px #cdcdcd;
+  text-align: left;
+  padding-left: 7%;
+}
+
+.list:active {
+  background: #f7f7f7;
+}

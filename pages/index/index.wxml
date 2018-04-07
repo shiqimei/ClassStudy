@@ -1,0 +1,7 @@
+<!--index.wxml-->
+<view class="container">
+<text class="address">当前位置：<text style="color:{{geoColor}}">{{ stuAddress }}</text></text>
+  <div class="circle" bindtap="tabName"> <text>\n<text class="label">开始时间</text>\n{{ time1 }}\n<text class="label">结束时间</text>\n{{time2}}</text></div>
+  <text class="notice" style="color:{{noticeColor}}"> {{ message }}</text>
+  <view class="button" id="tapTest" bindtap="tapName" style="color:{{foreColor}};background:{{buttonColor}}"> {{ content }} </view>
+</view>

@@ -1,0 +1,59 @@
+/**index.wxss**/
+page {
+    background: rgba(249, 249, 251,1);
+}
+
+.container {
+  padding:200rpx 0 0 0;
+}
+
+.address {
+  position: absolute;
+  top:10px;
+  right: 10px;
+  color: rgba(193, 193, 193,1);
+  font-size: 15px;
+}
+
+.circle {
+  width: 200px;
+  height: 200px;
+  background: rgba(30, 184, 254,1);
+  border-radius: 50%;
+  text-align: center;
+  line-height: 30px;
+  color:#fff;
+  font-weight: 900;
+  font-size: 25px;
+  box-shadow: 0 0 20px 1px #a7a7ae;
+}
+
+.label {
+  font-size: 15px;
+  color: #c9e64e;
+}
+
+.notice {
+  margin-top:50px;
+  font-weight: 900;
+  font-size: 20px;
+  text-align: center;
+}
+
+.button {
+  height: 40px;
+  width: 200px;
+  position: absolute;
+  bottom:25px;
+  border-radius: 25px;
+  box-shadow: 0 0 5px 1px #a7a7ae;
+  line-height: 40px;
+  text-align: center;
+  font-size:18px;
+  letter-spacing: 3px;
+  font-weight: 900;
+}
+
+.button:active {
+  transform: scale(1.015);
+}

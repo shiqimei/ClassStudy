@@ -1,0 +1,38 @@
+{
+  "pages":[
+    "pages/index/index",
+    "pages/graph/index",
+    "pages/about/index",
+    "pages/about/updateLog",
+    "pages/logs/logs"
+  ],
+  "window":{
+    "backgroundTextStyle":"light",
+    "navigationBarBackgroundColor": "#f9f9fb",
+    "navigationBarTitleText": "自助签到系统",
+    "navigationBarTextStyle":"black",
+    "backgroundColor": "#f9f9fb"
+  },
+  "tabBar":{
+    "color":"rgba(129, 129, 139,1)",
+    "selectedColor":"#3DB8FE",
+    "backgroundColor":"#fff",
+    "list":[{
+      "pagePath":"pages/index/index",
+      "text":"主页",
+      "iconPath":"images/home.png",
+      "selectedIconPath":"images/home-selected.png"
+    },{
+      "pagePath": "pages/graph/index",
+      "text": "图表",
+      "iconPath": "images/chart.png",
+      "selectedIconPath": "images/chart-selected.png"
+    },
+    {
+      "pagePath": "pages/about/index",
+      "text": "个人",
+      "iconPath": "images/user.png",
+      "selectedIconPath": "images/user-selected.png"
+    }]
+  }
+}

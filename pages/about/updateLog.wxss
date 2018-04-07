@@ -1,0 +1,23 @@
+/* pages/about/updateLog.wxss */
+page {
+    background: rgba(249, 249, 251,1);
+    padding: 25px;
+    display: block;
+}
+
+.header {
+  font-size: 18px;
+  display: block;
+  color: rgba(28, 31, 40,1);
+  margin-bottom: 15px;
+}
+.content {
+  font-size:12px;
+  color: rgba(28, 31, 40,1);
+  margin-top: 10px;
+  margin-left: 5px;
+}
+
+.content::before {
+  content: '●  ';
+}
