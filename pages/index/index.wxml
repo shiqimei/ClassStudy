@@ -1,9 +1,11 @@
 <view class="container">
-  <text class="address">当前位置：<text style="color:{{geoColor}}">{{ stuAddress }}</text></text>
-  <view class="circle" bindtap="tabName">
-    <text>\n<text class="label">开始时间\n{{ time1 }}\n</text>
-    <text class="label">结束时间</text>\n{{time2}}</text>
+  <text class="address">当前位置：<text style="color:{{ addressColor }}">{{ stuAddress }}</text></text>
+  <view class="circle">
+    <text>
+      <text class="label">\n开始时间</text>\n{{ time1 }}
+      <text class="label">结束时间</text>\n{{ time2 }}
+    </text>
   </view>
-  <text class="notice" style="color:{{noticeColor}}"> {{ message }}</text>
-  <view class="button" id="tapTest" bindtap="tapName" style="color:{{foreColor}};background:{{buttonColor}}"> {{ content }} </view>
+  <text class="notice" style="color:{{ messageColor }}">{{ message }}</text>
+  <view class="button" bindtap="tapButton" style="background:{{ buttonBgColor }}">{{ buttonValue }}</view>
 </view>

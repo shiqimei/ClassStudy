@@ -43,6 +43,7 @@ page {
 .button {
   height: 40px;
   width: 200px;
+  color: #fff;
   position: absolute;
   bottom:25px;
   border-radius: 25px;
