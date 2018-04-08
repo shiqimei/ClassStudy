@@ -76,7 +76,7 @@ Page({
   aboutUs:function(){
     wx.showModal({
       showCancel:false,
-      content: '　　软件作者:@LoliMay　　　　软件所有:安大17级软件工程',
+      content: '软件作者:@LoliMay(前端)、@Watermelon(后台)',
     })
   },
   bugTo: function () {

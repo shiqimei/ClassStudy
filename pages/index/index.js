@@ -92,10 +92,11 @@ Date.prototype.format = function (format) {
  * 显示自定义消息
  * @delay 单位:毫秒 持续时间(若为0则持续显示)
  */
-function showMessage(that, msg, delay) {
+function showMessage(that, msg, color, delay) {
   that.setData({
     msgStatus: 'block',
     message: msg,
+    messageBgColor:color
   })
   if (delay != 0) {
     setTimeout(function () {
@@ -111,17 +112,50 @@ function showMessage(that, msg, delay) {
  */
 function hideMessage(that) {
   that.setData({
-    msgStaus: 'none'
+    msgStatus: 'none'
   })
+}
+
+/**
+ * 显示结果时间
+ * @delay 单位:毫秒 持续时间(若为0则持续显示)
+ */
+function showResult(that, time, delay) {
+  that.setData({
+    resultStatus: 'block',
+    resultTime: time,
+  })
+  if (delay != 0) {
+    setTimeout(function () {
+      that.setData({
+        resultStatus: 'none'
+      })
+    }, delay)
+  }
+}
+
+/**
+ * 隐藏结果时间
+ */
+function hideResult(that) {
+  that.setData({
+    resultStatus: 'none'
+  })
+}
+
+/**
+ * 计算时间差
+ */
+function dTime(time1, time2) {
+  console.log(time1)
 }
 
 const musicSuccess = 'http://p4yx52bfi.bkt.clouddn.com/success.mp3'
 const musicError = 'http://p4yx52bfi.bkt.clouddn.com/error.mp3'
-var timer1
+var timestart, timeend, timer1
 
 Page({
   data: {
-    msgStatus: 'none',
     time1: '00:00:00',
     time2: '00:00:00',
     buttonValue: '开始签到',
@@ -130,21 +164,13 @@ Page({
     addressColor: '#999',
     message: '',
     buttonBgColor: '#2f7ff0',
-    msgLeft:'36.5%'
+    messageBgColor:'#00c100',
+    resultTime:'',
+    msgStatus: 'none',
+    resultStatus:'none'
   },
   tapButton: function () {
     var that = this
-    hideMessage(that) //不管顶部提示是否显示,隐藏它
-    // setInterval(function(){
-    //   getGeo(that)
-    // },1000)
-    // playAudio(musicSuccess)
-    // var buttonValue = this.data.buttonValue === '开始签到' ? '结束自习' : '开始签到'
-    // var buttonBgColor = this.data.buttonBgColor === '#2f7ff0' ? '#cc4125' : '#2f7ff0'
-    // this.setData({
-    //   buttonValue: buttonValue,
-    //   buttonBgColor: buttonBgColor
-    // })
     if (this.data.buttonValue == '开始签到') {
       this.setData({
         stuAddress: '未知区域'
@@ -160,7 +186,7 @@ Page({
             itemList: ['对不起,非自习区无法签到!'],
           })
         } else { //符合签到条件
-          var timestart = new Date().format('hh:mm:ss')
+          timestart = new Date().format('hh:mm:ss')
           playAudio(musicSuccess)
           that.setData({
             time1: timestart,
@@ -168,19 +194,29 @@ Page({
             buttonValue: '结束自习',
             buttonBgColor: '#cc4125'
           })
-          showMessage(that, '签到成功', 1500)
+          showMessage(that, '签到成功','#00c100', 1500)
         }
         wx.hideLoading(initLoading)
-        var cnt = 0 //累计不在自习区的次数
-        timer1 = setInterval(function () {
-          getGeo(that)
-          if (that.data.currentLocation == '生活区' || that.data.currentLocation == '未知区域') {
-            cnt++
-          }
-          if (cnt == 5) {
-            showMessage(that, '对不起,已连续5次检测到您不在学习区,已自动帮你结束了本次签到!',0)
-          }
-        }, 1000) //每60秒识别一下当前所在位置
+        if(that.data.buttonValue=='结束自习') {
+          var cnt = 0 //累计不在自习区的次数
+          timer1 = setInterval(function () {
+            getGeo(that)
+            if (that.data.currentLocation == '生活区' || that.data.currentLocation == '未知区域') {
+              cnt++
+            }
+            if (cnt == 5) {
+              timeend = new Date().format('hh:mm:ss')
+              showMessage(that, '对不起,已连续5次检测到您不在学习区,已自动帮你结束了本次签到!','rgba(226, 88, 80,1)',0)
+              playAudio(musicError)
+              that.setData({
+                buttonValue:'开始签到',
+                buttonBgColor: '#2f7ff0',
+                time2:timeend
+              })
+              clearInterval(timer1)
+            }
+          }, 1000) //每60秒识别一下当前所在位置
+        }
       }, 8000)
     }
   }

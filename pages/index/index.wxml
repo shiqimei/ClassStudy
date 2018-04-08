@@ -1,5 +1,5 @@
 <view class="container">
-  <text id="message" class="notice" style="display:{{ msgStatus }};left:{{ msgLeft }}">{{ message }}</text>    
+  <text id="message" class="notice" style="display:{{ msgStatus }};background:{{ messageBgColor }}">{{ message }}</text>    
   <text class="address">
     <text style="color:{{ addressColor }}">{{ currentLocation }} </text>
     <text class="radius"> {{ currentRadius }}</text>
@@ -10,5 +10,6 @@
     <text class="label">结束时间</text>\n{{ time2 }}
     </text>
   </view>
+  <text class="result">本次自习了{{ resultTime }},继续加油!</text>
   <view class="button" bindtap="tapButton" style="background:{{ buttonBgColor }}">{{ buttonValue }}</view>
 </view>
