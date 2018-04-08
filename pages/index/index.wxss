@@ -15,6 +15,10 @@ page {
   font-size: 15px;
 }
 
+.radius {
+  color: rgba(206, 145, 91,1);
+}
+
 .circle {
   width: 200px;
   height: 200px;

@@ -1,9 +1,12 @@
 <view class="container">
-  <text class="address">当前位置：<text style="color:{{ addressColor }}">{{ stuAddress }}</text></text>
+  <text class="address">
+    <text style="color:{{ addressColor }}">{{ currentLocation }} </text>
+    <text class="radius"> {{ currentRadius }}</text>
+  </text>
   <view class="circle">
     <text>
       <text class="label">\n开始时间</text>\n{{ time1 }}
-      <text class="label">结束时间</text>\n{{ time2 }}
+    <text class="label">结束时间</text>\n{{ time2 }}
     </text>
   </view>
   <text class="notice" style="color:{{ messageColor }}">{{ message }}</text>

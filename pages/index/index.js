@@ -30,15 +30,17 @@ function getGeo(that) {
       if (r <= accur) {
         that.setData({
           currentLocation: '生活区',
-          currentRadius: r
+          addressColor:'orange',
+          currentRadius: ((100-r*1000)*0.74074).toFixed(2)
         })
         console.log('生活区 '+r)
       } else {
         r = getDistance(lati, long, 31.768355, 117.184762)
         if (r <= accur) {
-          that.seData({
+          that.setData({
             currentLocation: '博北',
-            currentRadius:r
+            addressColor: 'green',
+            currentRadius: ((100 - r * 1000) * 0.74074).toFixed(2)
           })
           console.log('博北 '+r)
         } else {
@@ -46,13 +48,14 @@ function getGeo(that) {
           if(r<=accur){
             that.setData({
               currentLocation: '文典阁',
-              currentRadius: r
+              addressColor: 'green',
+              currentRadius: ((100 - r * 1000) * 0.74074).toFixed(2)
             })
             console.log('文典阁 '+r)
           } else {
             that.setData({
               currentLocation: '未知区域',
-              currentRadius: r
+              currentRadius: ((100 - r * 1000) * 0.74074).toFixed(2)
             })
             console.log('未知区域 '+r)
           }
@@ -62,31 +65,80 @@ function getGeo(that) {
   })
 }
 
+/**  
+* 时间对象的格式化   
+*/
+Date.prototype.format = function (format) {
+  var o = {
+    "h+": this.getHours(),    //hour   
+    "m+": this.getMinutes(),  //minute   
+    "s+": this.getSeconds(), //second
+  }
+  if (/(y+)/.test(format)) {
+    format = format.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
+  }
+  if (/(w+)/.test(format)) {
+    fmt = fmt.replace(RegExp.$1, week[this.getDay()]);
+  }
+  for (var k in o) {
+    if (new RegExp("(" + k + ")").test(format)) {
+      format = format.replace(RegExp.$1, RegExp.$1.length == 1 ? o[k] : ("00" + o[k]).substr(("" + o[k]).length));
+    }
+  }
+  return format;
+}  
+
 const musicSuccess = 'http://p4yx52bfi.bkt.clouddn.com/success.mp3'
 const musicError = 'http://p4yx52bfi.bkt.clouddn.com/error.mp3'
 
 Page({
   data: {
-    stuAddress: '未知区域',
     time1: '00:00:00',
     time2: '00:00:00',
     buttonValue: '开始签到',
-    currentLocation:'',
-    currentRadius:'',
-    addressColor: '',
+    currentLocation:'未知区域',
+    currentRadius:'0.00',
+    addressColor: '#999',
     messageColor: '',
     buttonBgColor: '#2f7ff0'
   },
   tapButton: function () {
-    setInterval(function(){
-      getGeo(this)
-    },1000)
-    playAudio(musicSuccess)
-    var buttonValue = this.data.buttonValue === '开始签到' ? '结束自习' : '开始签到'
-    var buttonBgColor = this.data.buttonBgColor === '#2f7ff0' ? '#cc4125' : '#2f7ff0'
-    this.setData({
-      buttonValue: buttonValue,
-      buttonBgColor: buttonBgColor
-    })
+    var that = this
+    // setInterval(function(){
+    //   getGeo(that)
+    // },1000)
+    // playAudio(musicSuccess)
+    // var buttonValue = this.data.buttonValue === '开始签到' ? '结束自习' : '开始签到'
+    // var buttonBgColor = this.data.buttonBgColor === '#2f7ff0' ? '#cc4125' : '#2f7ff0'
+    // this.setData({
+    //   buttonValue: buttonValue,
+    //   buttonBgColor: buttonBgColor
+    // })
+    if(this.data.buttonValue=='开始签到') {
+      this.setData({
+        stuAddress:'未知区域'
+      })
+      getGeo(that)
+      var initLoading = wx.showLoading({
+        title: '正在定位中',
+      })
+      setTimeout(function(){
+        if (that.data.currentLocation == '博北' || that.data.currentLocation == '未知区域') {
+          playAudio(musicError)
+          wx.showActionSheet({
+            itemList: ['对不起,非自习区无法签到!'],
+          })
+        } else {
+          var timestart = new Date().format('hh:mm:ss')
+          playAudio(musicSuccess)
+          that.setData({
+            time1: timestart,
+            buttonValue:'结束自习',
+            buttonBgColor:'#cc4125'
+          })
+        }
+        wx.hideLoading(initLoading)
+      },6000)
+    }
   }
 })
