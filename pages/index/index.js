@@ -86,20 +86,49 @@ Date.prototype.format = function (format) {
     }
   }
   return format;
-}  
+}
+
+/**
+ * 显示自定义消息
+ * @delay 单位:毫秒 持续时间(若为0则持续显示)
+ */
+function showMessage(that,msg,delay) {
+  that.setData({
+    msgStatus:'block',
+    message:msg,
+  })
+  if(delay!=0){
+    setTimeout(function () {
+      that.setData({
+        msgStatus:'none'
+      })
+    }, delay)
+  }
+}
+
+/**
+ * 隐藏消息
+ */
+function hideMessage(that) {
+  that.setData({
+    msgStaus:'none'
+  })
+}
 
 const musicSuccess = 'http://p4yx52bfi.bkt.clouddn.com/success.mp3'
 const musicError = 'http://p4yx52bfi.bkt.clouddn.com/error.mp3'
+var timer
 
 Page({
   data: {
+    msgStatus:'none',
     time1: '00:00:00',
     time2: '00:00:00',
     buttonValue: '开始签到',
     currentLocation:'未知区域',
     currentRadius:'0.00',
     addressColor: '#999',
-    messageColor: '',
+    message:'',
     buttonBgColor: '#2f7ff0'
   },
   tapButton: function () {
@@ -128,17 +157,19 @@ Page({
           wx.showActionSheet({
             itemList: ['对不起,非自习区无法签到!'],
           })
-        } else {
+        } else { //符合签到条件
           var timestart = new Date().format('hh:mm:ss')
           playAudio(musicSuccess)
           that.setData({
             time1: timestart,
+            time2:'00:00:00',
             buttonValue:'结束自习',
             buttonBgColor:'#cc4125'
           })
+          showMessage(that,'签到成功',1500)
         }
         wx.hideLoading(initLoading)
-      },6000)
+      },8000)
     }
   }
 })

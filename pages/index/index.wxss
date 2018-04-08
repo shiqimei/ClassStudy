@@ -4,7 +4,21 @@ page {
 }
 
 .container {
-  padding:200rpx 0 0 0;
+  padding:0;
+}
+
+.notice {
+  position: absolute;
+  top:15px;
+  left:36.5%;
+  padding: 5px 20px;
+  font-size: 15px;
+  text-align: center;
+  background: #00c100;
+  border-radius:7px;
+  box-shadow: 0 0 5px 1px #bdbdbd;
+  color: #fff;
+  letter-spacing: 1px;
 }
 
 .address {
@@ -20,6 +34,7 @@ page {
 }
 
 .circle {
+  margin-top:200rpx;
   width: 200px;
   height: 200px;
   background: rgba(30, 184, 254,1);
@@ -35,13 +50,6 @@ page {
 .label {
   font-size: 15px;
   color: #c9e64e;
-}
-
-.notice {
-  margin-top:50px;
-  font-weight: 900;
-  font-size: 20px;
-  text-align: center;
 }
 
 .button {
