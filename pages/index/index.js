@@ -147,7 +147,8 @@ function hideResult(that) {
  * 计算时间差
  */
 function dTime(time1, time2) {
-  console.log(time1)
+  var time = new Date(time2.getTime() - time1.getTime() - 28800000)
+  return time.getHours() + '小时' + time.getMinutes() + '分钟'
 }
 
 const musicSuccess = 'http://p4yx52bfi.bkt.clouddn.com/success.mp3'
@@ -171,6 +172,7 @@ Page({
   },
   tapButton: function () {
     var that = this
+    hideResult(that)
     if (this.data.buttonValue == '开始签到') {
       this.setData({
         stuAddress: '未知区域'
@@ -186,38 +188,49 @@ Page({
             itemList: ['对不起,非自习区无法签到!'],
           })
         } else { //符合签到条件
-          timestart = new Date().format('hh:mm:ss')
+          timestart = new Date()
           playAudio(musicSuccess)
           that.setData({
-            time1: timestart,
+            time1: timestart.format('hh:mm:ss'),
             time2: '00:00:00',
             buttonValue: '结束自习',
             buttonBgColor: '#cc4125'
           })
           showMessage(that, '签到成功','#00c100', 1500)
+          if (that.data.buttonValue == '结束自习') {
+            var cnt = 0 //累计不在自习区的次数
+            timer1 = setInterval(function () {
+              getGeo(that)
+              if (that.data.currentLocation == '生活区' || that.data.currentLocation == '未知区域') {
+                cnt++
+              }
+              if (cnt == 5) {
+                timeend = new Date()
+                showMessage(that, '对不起,已连续5次检测到您不在学习区,已自动帮你结束了本次签到!', 'rgba(226, 88, 80,1)', 0)
+                playAudio(musicError)
+                that.setData({
+                  buttonValue: '开始签到',
+                  buttonBgColor: '#2f7ff0',
+                  time2: timeend.format('hh:mm:ss'),
+                })
+                showResult(that,dTime(timestart, timeend),0)
+                clearInterval(timer1)
+              }
+            }, 60000) //每60秒识别一下当前所在位置
+          }
         }
         wx.hideLoading(initLoading)
-        if(that.data.buttonValue=='结束自习') {
-          var cnt = 0 //累计不在自习区的次数
-          timer1 = setInterval(function () {
-            getGeo(that)
-            if (that.data.currentLocation == '生活区' || that.data.currentLocation == '未知区域') {
-              cnt++
-            }
-            if (cnt == 5) {
-              timeend = new Date().format('hh:mm:ss')
-              showMessage(that, '对不起,已连续5次检测到您不在学习区,已自动帮你结束了本次签到!','rgba(226, 88, 80,1)',0)
-              playAudio(musicError)
-              that.setData({
-                buttonValue:'开始签到',
-                buttonBgColor: '#2f7ff0',
-                time2:timeend
-              })
-              clearInterval(timer1)
-            }
-          }, 1000) //每60秒识别一下当前所在位置
-        }
       }, 8000)
+    } else {
+      timeend = new Date()
+      showMessage(that, '签退成功', '#00c100', 1500)
+      playAudio(musicSuccess)
+      that.setData({
+        buttonValue: '开始签到',
+        buttonBgColor: '#2f7ff0',
+        time2: timeend.format('hh:mm:ss')
+      })
+      showResult(that, dTime(timestart, timeend), 0)
     }
   }
 })

@@ -10,6 +10,6 @@
     <text class="label">结束时间</text>\n{{ time2 }}
     </text>
   </view>
-  <text class="result">本次自习了{{ resultTime }},继续加油!</text>
+  <text class="result" style="display:{{ resultStatus }}">本次自习了{{ resultTime }},继续加油!</text>
   <view class="button" bindtap="tapButton" style="background:{{ buttonBgColor }}">{{ buttonValue }}</view>
 </view>
