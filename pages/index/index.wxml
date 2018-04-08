@@ -1,5 +1,5 @@
 <view class="container">
-  <text class="notice" style="display:{{ msgStatus }}">{{ message }}</text>    
+  <text id="message" class="notice" style="display:{{ msgStatus }};left:{{ msgLeft }}">{{ message }}</text>    
   <text class="address">
     <text style="color:{{ addressColor }}">{{ currentLocation }} </text>
     <text class="radius"> {{ currentRadius }}</text>

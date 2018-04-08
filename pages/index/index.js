@@ -21,7 +21,7 @@ function getGeo(that) {
   var lati, long, r, accur = 0.00135
   wx.getLocation({
     type: 'gcj02',
-    altitude:true,
+    altitude: true,
     success: function (res) {
       lati = res.latitude
       long = res.longitude
@@ -30,10 +30,10 @@ function getGeo(that) {
       if (r <= accur) {
         that.setData({
           currentLocation: '生活区',
-          addressColor:'orange',
-          currentRadius: ((100-r*1000)*0.74074).toFixed(2)
+          addressColor: 'orange',
+          currentRadius: ((100 - r * 1000) * 0.74074).toFixed(2)
         })
-        console.log('生活区 '+r)
+        console.log('生活区 ' + r)
       } else {
         r = getDistance(lati, long, 31.768355, 117.184762)
         if (r <= accur) {
@@ -42,22 +42,22 @@ function getGeo(that) {
             addressColor: 'green',
             currentRadius: ((100 - r * 1000) * 0.74074).toFixed(2)
           })
-          console.log('博北 '+r)
+          console.log('博北 ' + r)
         } else {
           r = getDistance(lati, long, 31.766805, 117.183195)
-          if(r<=accur){
+          if (r <= accur) {
             that.setData({
               currentLocation: '文典阁',
               addressColor: 'green',
               currentRadius: ((100 - r * 1000) * 0.74074).toFixed(2)
             })
-            console.log('文典阁 '+r)
+            console.log('文典阁 ' + r)
           } else {
             that.setData({
               currentLocation: '未知区域',
               currentRadius: ((100 - r * 1000) * 0.74074).toFixed(2)
             })
-            console.log('未知区域 '+r)
+            console.log('未知区域 ' + r)
           }
         }
       }
@@ -92,15 +92,15 @@ Date.prototype.format = function (format) {
  * 显示自定义消息
  * @delay 单位:毫秒 持续时间(若为0则持续显示)
  */
-function showMessage(that,msg,delay) {
+function showMessage(that, msg, delay) {
   that.setData({
-    msgStatus:'block',
-    message:msg,
+    msgStatus: 'block',
+    message: msg,
   })
-  if(delay!=0){
+  if (delay != 0) {
     setTimeout(function () {
       that.setData({
-        msgStatus:'none'
+        msgStatus: 'none'
       })
     }, delay)
   }
@@ -111,28 +111,30 @@ function showMessage(that,msg,delay) {
  */
 function hideMessage(that) {
   that.setData({
-    msgStaus:'none'
+    msgStaus: 'none'
   })
 }
 
 const musicSuccess = 'http://p4yx52bfi.bkt.clouddn.com/success.mp3'
 const musicError = 'http://p4yx52bfi.bkt.clouddn.com/error.mp3'
-var timer
+var timer1
 
 Page({
   data: {
-    msgStatus:'none',
+    msgStatus: 'none',
     time1: '00:00:00',
     time2: '00:00:00',
     buttonValue: '开始签到',
-    currentLocation:'未知区域',
-    currentRadius:'0.00',
+    currentLocation: '未知区域',
+    currentRadius: '0.00',
     addressColor: '#999',
-    message:'',
-    buttonBgColor: '#2f7ff0'
+    message: '',
+    buttonBgColor: '#2f7ff0',
+    msgLeft:'36.5%'
   },
   tapButton: function () {
     var that = this
+    hideMessage(that) //不管顶部提示是否显示,隐藏它
     // setInterval(function(){
     //   getGeo(that)
     // },1000)
@@ -143,15 +145,15 @@ Page({
     //   buttonValue: buttonValue,
     //   buttonBgColor: buttonBgColor
     // })
-    if(this.data.buttonValue=='开始签到') {
+    if (this.data.buttonValue == '开始签到') {
       this.setData({
-        stuAddress:'未知区域'
+        stuAddress: '未知区域'
       })
       getGeo(that)
       var initLoading = wx.showLoading({
         title: '正在定位中',
       })
-      setTimeout(function(){
+      setTimeout(function () {
         if (that.data.currentLocation == '博北' || that.data.currentLocation == '未知区域') {
           playAudio(musicError)
           wx.showActionSheet({
@@ -162,14 +164,24 @@ Page({
           playAudio(musicSuccess)
           that.setData({
             time1: timestart,
-            time2:'00:00:00',
-            buttonValue:'结束自习',
-            buttonBgColor:'#cc4125'
+            time2: '00:00:00',
+            buttonValue: '结束自习',
+            buttonBgColor: '#cc4125'
           })
-          showMessage(that,'签到成功',1500)
+          showMessage(that, '签到成功', 1500)
         }
         wx.hideLoading(initLoading)
-      },8000)
+        var cnt = 0 //累计不在自习区的次数
+        timer1 = setInterval(function () {
+          getGeo(that)
+          if (that.data.currentLocation == '生活区' || that.data.currentLocation == '未知区域') {
+            cnt++
+          }
+          if (cnt == 5) {
+            showMessage(that, '对不起,已连续5次检测到您不在学习区,已自动帮你结束了本次签到!',0)
+          }
+        }, 1000) //每60秒识别一下当前所在位置
+      }, 8000)
     }
   }
 })
