@@ -151,9 +151,18 @@ function dTime(time1, time2) {
   return time.getHours() + '小时' + time.getMinutes() + '分钟'
 }
 
+/**
+ * 获取当前日期
+ */
+function getDate(){
+  var time = new Date()
+  return time.getMonth()+1 + '-' + time.getDate()
+}
+
 const musicSuccess = 'http://p4yx52bfi.bkt.clouddn.com/success.mp3'
 const musicError = 'http://p4yx52bfi.bkt.clouddn.com/error.mp3'
 var timestart, timeend, timer1
+var ToDay = getDate()
 
 Page({
   data: {
@@ -197,6 +206,7 @@ Page({
             buttonBgColor: '#cc4125'
           })
           showMessage(that, '签到成功','#00c100', 1500)
+          wx.hideLoading(initLoading)
           if (that.data.buttonValue == '结束自习') {
             var cnt = 0 //累计不在自习区的次数
             timer1 = setInterval(function () {
@@ -213,13 +223,31 @@ Page({
                   buttonBgColor: '#2f7ff0',
                   time2: timeend.format('hh:mm:ss'),
                 })
-                showResult(that,dTime(timestart, timeend),0)
+                showResult(that, dTime(timestart, timeend), 0)
                 clearInterval(timer1)
+                // wx.request({  //向服务器传递数据
+                //   url: 'test.php',
+                //   method: 'POST',
+                //   data: {
+                //     date: ToDay,
+                //     time: dTime(timestart, timeend)
+                //   },
+                //   header: {
+                //     'content-type': 'application/json' // 默认值
+                //   },
+                //   success: function (res) {
+                //     console.log(res.data)
+                //   }
+                // })
+                var data = {
+                  date: ToDay,
+                  time: dTime(timestart, timeend)
+                }
+                console.log(JSON.stringify(data))
               }
-            }, 60000) //每60秒识别一下当前所在位置
+            }, 1000) //每60秒识别一下当前所在位置
           }
         }
-        wx.hideLoading(initLoading)
       }, 8000)
     } else {
       timeend = new Date()
