@@ -156,7 +156,7 @@ function dTime(time1, time2) {
  */
 function getDate(){
   var time = new Date()
-  return time.getMonth()+1 + '-' + time.getDate()
+  return time.getDate()
 }
 
 const musicSuccess = 'http://p4yx52bfi.bkt.clouddn.com/success.mp3'
@@ -229,6 +229,7 @@ Page({
                 //   url: 'test.php',
                 //   method: 'POST',
                 //   data: {
+                //     id:'49'
                 //     date: ToDay,
                 //     time: dTime(timestart, timeend)
                 //   },
@@ -239,11 +240,6 @@ Page({
                 //     console.log(res.data)
                 //   }
                 // })
-                var data = {
-                  date: ToDay,
-                  time: dTime(timestart, timeend)
-                }
-                console.log(JSON.stringify(data))
               }
             }, 1000) //每60秒识别一下当前所在位置
           }
@@ -259,6 +255,21 @@ Page({
         time2: timeend.format('hh:mm:ss')
       })
       showResult(that, dTime(timestart, timeend), 0)
+      // wx.request({  //向服务器传递数据
+      //   url: 'test.php',
+      //   method: 'POST',
+      //   data: {
+      //     id:'49'
+      //     date: ToDay,
+      //     time: dTime(timestart, timeend)
+      //   },
+      //   header: {
+      //     'content-type': 'application/json' // 默认值
+      //   },
+      //   success: function (res) {
+      //     console.log(res.data)
+      //   }
+      // })
     }
   }
 })
