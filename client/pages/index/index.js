@@ -68,7 +68,7 @@ function getGeo(that) {
 /**
  * 与服务器交互
  */
-function wxLogin(){
+function wxLogin(dTime){
   wx.login({
     success: function (res) {
       var code = res.code;//发送给服务器的code  
@@ -82,9 +82,7 @@ function wxLogin(){
               url: 'https://app.lolimay.cn/qd.php', 
               data: {
                 code: code,
-                nick: userNick,
-                avaurl: avataUrl,
-                sex: gender,
+                ljsj: dTime
               },
               header: {
                 'content-type': 'application/json'
@@ -239,11 +237,10 @@ Page({
         title: '正在定位中',
       })
       setTimeout(function () {
-        if (that.data.currentLocation == '生活区1' || that.data.currentLocation == '1未知区域') {
+        if (that.data.currentLocation == '生活区' || that.data.currentLocation == '未知区域') {
           playAudio(musicError)
-          wx.showActionSheet({
-            itemList: ['对不起,非自习区无法签到!'],
-          })
+          showMessage(that, '对不起,非自习区无法签到!','rgba(226, 88, 80,1)',1500)
+          wx.hideLoading(initLoading)
         } else { //符合签到条件
           timestart = new Date()
           playAudio(musicSuccess)
@@ -259,7 +256,7 @@ Page({
             var cnt = 0 //累计不在自习区的次数
             timer1 = setInterval(function () {
               getGeo(that)
-              if (that.data.currentLocation == '生活区1' || that.data.currentLocation == '1未知区域') {
+              if (that.data.currentLocation == '生活区' || that.data.currentLocation == '未知区域') {
                 cnt++
               }
               if (cnt == 5) {
@@ -273,21 +270,6 @@ Page({
                 })
                 showResult(that, dTime(timestart, timeend), 0)
                 clearInterval(timer1)
-                // wx.request({  //向服务器传递数据
-                //   url: 'test.php',
-                //   method: 'POST',
-                //   data: {
-                //     id:'49'
-                //     date: ToDay,
-                //     time: dTime(timestart, timeend)
-                //   },
-                //   header: {
-                //     'content-type': 'application/json' // 默认值
-                //   },
-                //   success: function (res) {
-                //     console.log(res.data)
-                //   }
-                // })
               }
             }, 1000) //每60秒识别一下当前所在位置
           }
@@ -303,62 +285,7 @@ Page({
         time2: timeend.format('hh:mm:ss')
       })
       showResult(that, dTime(timestart, timeend), 0)
-      // wx.request({  //向服务器传递数据
-      //   url: 'test.php',
-      //   method: 'POST',
-      //   data: {
-      //     id:'49'
-      //     date: ToDay,
-      //     time: dTime(timestart, timeend)
-      //   },
-      //   header: {
-      //     'content-type': 'application/json' // 默认值
-      //   },
-      //   success: function (res) {
-      //     console.log(res.data)
-      //   }
-      // })
-     /*
-     /开始传递数据到服务器 LFX
-     */
-      wx.login({
-        success: function (res) {
-          var code = res.code;//发送给服务器的code  
-          wx.getUserInfo({
-            success: function (res) {
-              var userNick = res.userInfo.nickName;//用户昵称  
-              var avataUrl = res.userInfo.avatarUrl;//用户头像地址  
-              var gender = res.userInfo.gender;//用户性别  
-              if (code) {
-                wx.request({
-                  url: 'https://app.lolimay.cn/qd.php',
-                  data: {
-                    ljsj: dTime2(timestart, timeend),
-                    code: code,
-                  },
-                  header: {
-                    'content-type': 'application/json'
-                  },
-                  success: function (res) {
-                    console.log(res.data);
-                   // wx.setStorageSync('ljsj', dTime2(timestart, timeend));
-                    //wx.setStorageSync('openid', res.data.openid);
-                  }
-                })
-              }
-              else {
-                console.log("获取用户登录态失败！");
-              }
-            }
-          })
-        },
-        fail: function (error) {
-          console.log('login failed ' + error);
-        }
-      })
-
-
-
+      wxLogin(dTime2(timestart, timeend))
     }
   }
 })

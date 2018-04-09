@@ -78,4 +78,6 @@ page {
   color: orangered;
   margin-top:100rpx;
   font-weight: 900;
+  font-size: 15px;
+  text-align: center;
 }
