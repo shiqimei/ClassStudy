@@ -82,7 +82,6 @@ function getName(that) {
     }
   })
 }
-
 const app = getApp()
 var inputValue = ''
 
@@ -102,7 +101,10 @@ Page({
   onLoad: function () {
     var that = this
     //判断用户是否已经绑定用户名
-    getName(that)
+    if (getApp().globalData.userInfo!=null) {
+      var that = this
+      getName(that)
+    }
     if (app.globalData.userInfo) {
       this.setData({
         userInfo: app.globalData.userInfo,

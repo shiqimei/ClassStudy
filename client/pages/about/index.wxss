@@ -8,7 +8,6 @@ page {
 }
 
 button {
-  width: 80%;
   margin-bottom: 30rpx;
 }
 

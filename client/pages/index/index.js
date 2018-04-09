@@ -205,45 +205,6 @@ function getDate(){
   return time.getDate()
 }
 
-/**
- * 获取用户名字
- */
-function getName(that) {
-  wx.login({
-    success: function (res) {
-      var code = res.code;//发送给服务器的code  
-      wx.getUserInfo({
-        success: function (res) {
-          if (code) {
-            wx.request({
-              url: 'https://app.lolimay.cn/name.php',
-              data: {
-                code: code,
-              },
-              header: {
-                'content-type': 'application/json'
-              },
-              success: function (res) {
-                console.log(res.data)
-                getApp().globalData.userName = res.data
-                that.setData({
-                  isNameExisted: true
-                })
-              }
-            })
-          }
-          else {
-            console.log("获取用户登录态失败！");
-          }
-        }
-      })
-    },
-    fail: function (error) {
-      console.log('login failed ' + error);
-    }
-  })
-}
-
 const musicSuccess = 'http://p4yx52bfi.bkt.clouddn.com/success.mp3'
 const musicError = 'http://p4yx52bfi.bkt.clouddn.com/error.mp3'
 var timestart, timeend, timer1
@@ -263,74 +224,74 @@ Page({
     resultTime:'',
     msgStatus: 'none',
     resultStatus:'none',
-    isNameExisted = false
-  },
-  onLoad: function() {
-    var that = this
-    getName()
   },
   tapButton: function () {
     var that = this
-    hideResult(that)
-    if (this.data.buttonValue == '开始签到') {
-      this.setData({
-        stuAddress: '未知区域'
-      })
-      getGeo(that)
-      var initLoading = wx.showLoading({
-        title: '正在定位中',
-      })
-      setTimeout(function () { //调试flag：正式发布时请取消注释
-        if (/*that.data.currentLocation == '生活区' ||*/ that.data.currentLocation == '未知区域') {
-          playAudio(musicError)
-          showMessage(that, '对不起,非自习区无法签到!','rgba(226, 88, 80,1)',1500)
-          wx.hideLoading(initLoading)
-        } else { //符合签到条件
-          timestart = new Date()
-          playAudio(musicSuccess)
-          that.setData({
-            time1: timestart.format('hh:mm:ss'),
-            time2: '00:00:00',
-            buttonValue: '结束自习',
-            buttonBgColor: '#cc4125'
-          })
-          showMessage(that, '签到成功','#00c100', 1500)
-          wx.hideLoading(initLoading)
-          if (that.data.buttonValue == '结束自习') {
-            var cnt = 0 //开始自习后开始累计不在自习区的次数
-            timer1 = setInterval(function () {
-              getGeo(that) //调试flag：正式发布时请取消注释
-              if (that.data.currentLocation == '生活区' || that.data.currentLocation == '未知区域') {
-                cnt++
-              }
-              if (cnt == 5) {
-                timeend = new Date()
-                showMessage(that, '已连续5次检测到您不在学习区,已自动帮您结束本次签到', 'rgba(226, 88, 80,1)', 0)
-                playAudio(musicError)
-                that.setData({
-                  buttonValue: '开始签到',
-                  buttonBgColor: '#2f7ff0',
-                  time2: timeend.format('hh:mm:ss'),
-                })
-                showResult(that, dTime(timestart, timeend), 0)
-                wxLogin(dTime2(timestart, timeend))
-                clearInterval(timer1)
-              }
-            }, 1000) //每60秒识别一下当前所在位置
-          } //调试flag：正式发布时请将时间改为60000
-        }
-      }, 8000)
+    if (getApp().globalData.userInfo==null) {
+      playAudio(musicError)
+      showMessage(that, '请先登录并绑定姓名', 'rgba(226, 88, 80,1)', 1500)
     } else {
-      timeend = new Date()
-      showMessage(that, '签退成功', '#00c100', 1500)
-      playAudio(musicSuccess)
-      that.setData({
-        buttonValue: '开始签到',
-        buttonBgColor: '#2f7ff0',
-        time2: timeend.format('hh:mm:ss')
-      })
-      showResult(that, dTime(timestart, timeend), 0)
-      wxLogin(dTime2(timestart, timeend))
+      hideResult(that)
+      if (this.data.buttonValue == '开始签到') {
+        this.setData({
+          stuAddress: '未知区域'
+        })
+        getGeo(that)
+        var initLoading = wx.showLoading({
+          title: '正在定位中',
+        })
+        setTimeout(function () { //调试flag：正式发布时请取消注释
+          if (/*that.data.currentLocation == '生活区' ||*/ that.data.currentLocation == '未知区域') {
+            playAudio(musicError)
+            showMessage(that, '对不起,非自习区无法签到!', 'rgba(226, 88, 80,1)', 1500)
+            wx.hideLoading(initLoading)
+          } else { //符合签到条件
+            timestart = new Date()
+            playAudio(musicSuccess)
+            that.setData({
+              time1: timestart.format('hh:mm:ss'),
+              time2: '00:00:00',
+              buttonValue: '结束自习',
+              buttonBgColor: '#cc4125'
+            })
+            showMessage(that, '签到成功', '#00c100', 1500)
+            wx.hideLoading(initLoading)
+            if (that.data.buttonValue == '结束自习') {
+              var cnt = 0 //开始自习后开始累计不在自习区的次数
+              timer1 = setInterval(function () {
+                getGeo(that) //调试flag：正式发布时请取消注释
+                if (that.data.currentLocation == '生活区' || that.data.currentLocation == '未知区域') {
+                  cnt++
+                }
+                if (cnt == 5) {
+                  timeend = new Date()
+                  showMessage(that, '已连续5次检测到您不在学习区,已自动帮您结束本次签到', 'rgba(226, 88, 80,1)', 0)
+                  playAudio(musicError)
+                  that.setData({
+                    buttonValue: '开始签到',
+                    buttonBgColor: '#2f7ff0',
+                    time2: timeend.format('hh:mm:ss'),
+                  })
+                  showResult(that, dTime(timestart, timeend), 0)
+                  wxLogin(dTime2(timestart, timeend))
+                  clearInterval(timer1)
+                }
+              }, 1000) //每60秒识别一下当前所在位置
+            } //调试flag：正式发布时请将时间改为60000
+          }
+        }, 8000)
+      } else {
+        timeend = new Date()
+        showMessage(that, '签退成功', '#00c100', 1500)
+        playAudio(musicSuccess)
+        that.setData({
+          buttonValue: '开始签到',
+          buttonBgColor: '#2f7ff0',
+          time2: timeend.format('hh:mm:ss')
+        })
+        showResult(that, dTime(timestart, timeend), 0)
+        wxLogin(dTime2(timestart, timeend))
+      }
     }
   }
 })
