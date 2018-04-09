@@ -65,6 +65,48 @@ function getGeo(that) {
   })
 }
 
+function wxLogin(){
+  wx.login({
+    success: function (res) {
+      var code = res.code;//发送给服务器的code  
+      wgetUserInfo({
+        success: function (res) {
+          var userNick = res.userInfo.nickName;//用户昵称  
+          var avataUrl = res.userInfo.avatarUrl;//用户头像地址  
+          var gender = res.userInfo.gender;//用户性别  
+          if (code) {
+            wx.request({
+              url: 'https://localhost/server/qd.php',//服务器的地址，现在微信小程序只支持https请求，所以调试的时候请勾选不校监安全域名  
+              data: {
+                code: code,
+                nick: userNick,
+                avaurl: avataUrl,
+                sex: gender,
+              },
+              header: {
+                'content-type': 'application/json'
+              },
+              success: function (res) {
+                console.log(res.data);
+                wx.setStorageSync('name', res.data.name);//将获取信息写入本地缓存  
+                wx.setStorageSync('openid', res.data.openid);
+                wx.setStorageSync('imgUrl', res.data.imgurl);
+                wx.setStorageSync('sex', res.data.sex);
+              }
+            })
+          }
+          else {
+            console.log("获取用户登录态失败！");
+          }
+        }
+      })
+    },
+    fail: function (error) {
+      console.log('login failed ' + error);
+    }
+  })
+}
+
 /**  
 * 时间对象的格式化   
 */
