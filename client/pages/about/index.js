@@ -120,7 +120,7 @@ Page({
   aboutUs:function(){
     wx.showModal({
       showCancel:false,
-      content: '软件作者:@LoliMay(前端)、@Watermelon(后台)',
+      content: '安徽大学17级软件工程班级自习自助签到系统　　　　　　\t　　软件作者:@LoliMay(前端)、@Watermelon(后台)',
     })
   },
   bugTo: function () {

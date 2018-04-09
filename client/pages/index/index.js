@@ -236,8 +236,8 @@ Page({
       var initLoading = wx.showLoading({
         title: '正在定位中',
       })
-      setTimeout(function () {
-        if (that.data.currentLocation == '生活区' || that.data.currentLocation == '未知区域') {
+      setTimeout(function () { //调试flag：正式发布时请取消注释
+        if (/*that.data.currentLocation == '生活区' ||*/ that.data.currentLocation == '未知区域') {
           playAudio(musicError)
           showMessage(that, '对不起,非自习区无法签到!','rgba(226, 88, 80,1)',1500)
           wx.hideLoading(initLoading)
@@ -253,15 +253,15 @@ Page({
           showMessage(that, '签到成功','#00c100', 1500)
           wx.hideLoading(initLoading)
           if (that.data.buttonValue == '结束自习') {
-            var cnt = 0 //累计不在自习区的次数
+            var cnt = 0 //开始自习后开始累计不在自习区的次数
             timer1 = setInterval(function () {
-              getGeo(that)
+              getGeo(that) //调试flag：正式发布时请取消注释
               if (that.data.currentLocation == '生活区' || that.data.currentLocation == '未知区域') {
                 cnt++
               }
               if (cnt == 5) {
                 timeend = new Date()
-                showMessage(that, '对不起,已连续5次检测到您不在学习区,已自动帮你结束了本次签到!', 'rgba(226, 88, 80,1)', 0)
+                showMessage(that, '已连续5次检测到您不在学习区,已自动帮您结束本次签到', 'rgba(226, 88, 80,1)', 0)
                 playAudio(musicError)
                 that.setData({
                   buttonValue: '开始签到',
@@ -269,10 +269,11 @@ Page({
                   time2: timeend.format('hh:mm:ss'),
                 })
                 showResult(that, dTime(timestart, timeend), 0)
+                wxLogin(dTime2(timestart, timeend))
                 clearInterval(timer1)
               }
             }, 1000) //每60秒识别一下当前所在位置
-          }
+          } //调试flag：正式发布时请将时间改为60000
         }
       }, 8000)
     } else {
