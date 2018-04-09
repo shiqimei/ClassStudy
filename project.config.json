@@ -1,4 +1,10 @@
 {
+	"client": "./client",
+	"svr": "./server",
+	"miniprogramRoot": "./client",
+	"qcloudRoot": "./server",
+	"appid": "wx0ba5298ddba9abfe",
+	"projectname": "ClassStudy",
 	"description": "项目配置文件。",
 	"setting": {
 		"urlCheck": true,
@@ -9,8 +15,6 @@
 	},
 	"compileType": "miniprogram",
 	"libVersion": "1.9.94",
-	"appid": "wx0ba5298ddba9abfe",
-	"projectname": "ClassStudy",
 	"isGameTourist": false,
 	"condition": {
 		"search": {
