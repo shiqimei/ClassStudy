@@ -193,11 +193,11 @@ function hideResult(that) {
  */
 function dTime(time1, time2) {
   var time = new Date(time2.getTime() - time1.getTime() - 28800000)
-  return time.getHours() + '小时' + time.getMinutes()+1 + '分钟'
+  return time.getHours() + '小时' + time.getMinutes() + '分钟'
 }
 function dTime2(time1, time2) {
   var time = new Date(time2.getTime() - time1.getTime() - 28800000)
-  return time.getHours() + ':' + time.getMinutes()+1
+  return time.getHours() + ':' + time.getMinutes()
 }
 /**
  * 获取当前日期
@@ -318,7 +318,9 @@ Page({
       //     console.log(res.data)
       //   }
       // })
-     
+     /*
+     /开始传递数据到服务器 LFX
+     */
       wx.login({
         success: function (res) {
           var code = res.code;//发送给服务器的code  
@@ -339,8 +341,8 @@ Page({
                   },
                   success: function (res) {
                     console.log(res.data);
-                    wx.setStorageSync('ljsj', dTime2(timestart, timeend));
-                    wx.setStorageSync('openid', res.data.openid);
+                   // wx.setStorageSync('ljsj', dTime2(timestart, timeend));
+                    //wx.setStorageSync('openid', res.data.openid);
                   }
                 })
               }

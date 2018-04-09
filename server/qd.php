@@ -3,7 +3,8 @@
 $ri = date("d");
 $ljsj = $_GET['ljsj'];//累计时间
 $name = $_GET['name'];//累计时间
-$flag=0;
+//$flag=0;
+$flag1=0;
 /*
 $stuId = "45";//学号
 $ri ="09";
@@ -22,7 +23,9 @@ $arr3 = get_object_vars($json);
 $openid = $arr3['openid'];  
 //$openid =  $_GET['openid'];
 
-echo $name."openid:".$openid;
+//echo $name."openid:".$openid;
+
+
 $con = mysqli_connect("localhost", "westery", "3.1415926lfx","ClassStudy");
 //$con = mysqli_connect("loli.52mc.xin", "westery", "3.1415926lfx","ClassStudy");
 //$con = mysqli_connect("localhost", "root", "wx0ba5298ddba9abfe","cAuth");
@@ -42,12 +45,36 @@ if (!$result) {
  exit();
 }
 
-echo "连接服务器成功";
+//echo "连接服务器成功";
 
-while($row=mysqli_fetch_row($result))  //row 0 openid 1 姓名；2 QQ；
-{ 
- if($row[0]==$openid)
-  { $flag=1;
+
+
+
+
+
+
+while($row=mysqli_fetch_row($result))  //row 0 openid; 1 姓名；2 QQ；
+{  //echo $row[1].$row[0].$name."\n";
+  if($row[1]==$name && $row[0]=="")
+  { $flag1=1;
+    //echo "检测到无注册，下面进行注册.";
+      $insertdata="update a".date("Ym")." set openid='".$openid."' where name='".$row[1]."'";
+      if($con->query($insertdata)==true){  
+        echo $name."注册成功!";  
+        exit();
+    }
+    else{  
+        echo "注册失败!请联系管理员~:" . $connent->error;  
+        exit();
+    }  
+  }
+  if($row[0]==$openid)
+  { $flag1=1;
+    if($ljsj==""){
+      echo $row[1]. "同学,您已经绑定过了哦~";
+      exit();
+    }
+
     $sql2 = "SELECT d".$ri." FROM a".date("Ym") ." where openid='".$openid."'";
 
     $result2 = mysqli_query($con,$sql2);
@@ -79,10 +106,10 @@ while($row=mysqli_fetch_row($result))  //row 0 openid 1 姓名；2 QQ；
      // echo $sql;
       if($con->query($sql))
 {
-  echo "成功!\n";
+  echo "签退成功!本日共签到:".$timetemp."小时".$timetemp2."分钟\n";
 }
 else{
-  echo "失败！\n";
+  echo "签退失败！请联系管理员~\n";
 }
 
 
@@ -93,21 +120,24 @@ else{
 }
 
 }
-if($flag==0)
-{
-  echo "检测到无注册，下面进行注册.";
-  if($name !="" && $openid !=""){
-    $insertdata="insert into a".date("Ym")."(openid,name) values('".$openid."','".$name."')";  
-  if($con->query($insertdata)==true){  
-      echo $name."注册成功";  
-      exit();
-  }
-  else{  
-      echo "插入错误 " . $connent->error;  
-      exit();
-  }  
-  }
-  else{echo "openid不得为空。";}
-}
+ if ($flag1==0)
+ {
+    echo "您的姓名不在我们的列表中，不好意思。";
+ }
+
+
+// if($flag==0)
+// {
+//   echo "检测到无注册，下面进行注册.";
+//   if($name !="" && $openid !=""){
+     
+
+
+
+//     $insertdata="insert into a".date("Ym")."(openid,name) values('".$openid."','".$name."')";  
+  
+//   }
+//   else{echo "openid不得为空。";}
+// }
 mysqli_close($con);
 ?>
