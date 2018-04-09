@@ -72,14 +72,14 @@ function wxLogin(){
   wx.login({
     success: function (res) {
       var code = res.code;//发送给服务器的code  
-      wgetUserInfo({
+      wx.getUserInfo({
         success: function (res) {
           var userNick = res.userInfo.nickName;//用户昵称  
           var avataUrl = res.userInfo.avatarUrl;//用户头像地址  
           var gender = res.userInfo.gender;//用户性别  
           if (code) {
             wx.request({
-              url: 'https://localhost/server/qd.php',//服务器的地址，现在微信小程序只支持https请求，所以调试的时候请勾选不校监安全域名  
+              url: 'https://app.lolimay.cn/qd.php', 
               data: {
                 code: code,
                 nick: userNick,
