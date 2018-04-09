@@ -25,7 +25,8 @@ if($stuId=="")
 
 
 //$con = mysqli_connect("localhost", "westery", "3.1415926lfx","ClassStudy");
-$con = mysqli_connect("loli.52mc.xin", "westery", "3.1415926lfx","ClassStudy");
+//$con = mysqli_connect("loli.52mc.xin", "westery", "3.1415926lfx","ClassStudy");
+$con = mysqli_connect("localhost", "root", "wx0ba5298ddba9abfe","cAuth");
 if (!$con)
   {
   die('数据库连接失败，请联系管理员。 ' . mysqli_error());
