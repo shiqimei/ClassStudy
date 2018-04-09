@@ -3,7 +3,7 @@
 $ri = date("d");
 $ljsj = $_GET['ljsj'];//累计时间
 $name = $_GET['name'];//累计时间
-
+$flag=0;
 /*
 $stuId = "45";//学号
 $ri ="09";
@@ -20,9 +20,8 @@ $info = file_get_contents($url);//发送HTTPs请求并获取返回的数据，�
 $json = json_decode($info);//对json数据解码  
 $arr3 = get_object_vars($json);  
 $openid = $arr3['openid'];  
+//$openid =  $_GET['openid'];
 
-//$ljsj="1:1";
-//$openid="ottv54qPb7uFqYhaxDWJX6urjTkE";
 echo $name."openid:".$openid;
 $con = mysqli_connect("localhost", "westery", "3.1415926lfx","ClassStudy");
 //$con = mysqli_connect("loli.52mc.xin", "westery", "3.1415926lfx","ClassStudy");
@@ -48,7 +47,7 @@ echo "连接服务器成功";
 while($row=mysqli_fetch_row($result))  //row 0 openid 1 姓名；2 QQ；
 { 
  if($row[0]==$openid)
-  {
+  { $flag=1;
     $sql2 = "SELECT d".$ri." FROM a".date("Ym") ." where openid='".$openid."'";
 
     $result2 = mysqli_query($con,$sql2);
@@ -92,21 +91,23 @@ else{
 
 
 }
-else{
+
+}
+if($flag==0)
+{
+  echo "检测到无注册，下面进行注册.";
   if($name !="" && $openid !=""){
-  $insertdata="insert into a".date("Ym")."(openid,name) values('".$openid."','".$name."')";  
-if($con->query($insertdata)==true){  
-    echo $name."注册成功";  
-    exit();
-}
-else{  
-    echo "插入错误 " . $connent->error;  
-    exit();
-}  
-}
-
-
-}
+    $insertdata="insert into a".date("Ym")."(openid,name) values('".$openid."','".$name."')";  
+  if($con->query($insertdata)==true){  
+      echo $name."注册成功";  
+      exit();
+  }
+  else{  
+      echo "插入错误 " . $connent->error;  
+      exit();
+  }  
+  }
+  else{echo "openid不得为空。";}
 }
 mysqli_close($con);
 ?>
