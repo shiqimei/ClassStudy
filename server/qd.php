@@ -1,12 +1,24 @@
 <?php
-$stuId = $_POST['name'];//学号
-$ri = $_POST['name'];//日子
-$ljsj = $_POST['name'];//累计时间
+//$stuId = $_POST['s'];//学号
+$ri = date("d");
+$ljsj = $_POST['ljsj'];//累计时间
 /*
 $stuId = "45";//学号
 $ri ="09";
 $ljsj ="01:00";
 */
+
+$code = $_GET['code'];//小程序传来的code值   累计时间
+//$nick = $_GET['nick'];//小程序传来的用户昵称  
+//$imgUrl = $_GET['avaurl'];//小程序传来的用户头像地址  
+//$sex = $_GET['sex'];//小程序传来的用户性别  
+$url = 'https://api.weixin.qq.com/sns/jscode2session?appid=wx0ba5298ddba9abfe&secret=470b6d2ba2196279397cf28d6e9a3522&js_code=' . $code . '&grant_type=authorization_code';  
+//yourAppid为开发者appid.appSecret为开发者的appsecret,都可以从微信公众平台获取；  
+$info = file_get_contents($url);//发送HTTPs请求并获取返回的数据，推荐使用curl  
+$json = json_decode($info);//对json数据解码  
+$arr3 = get_object_vars($json);  
+$openid = $arr3['openid'];  
+echo "openid:".$openid;
 if($stuId=="")
  {echo "调用错误。";
   return 0;}
@@ -34,7 +46,7 @@ while($row=mysqli_fetch_row($result))  //row 0 学号；1 openid；2 姓名；3 
 { 
  if($row[0]==$stuId)
   {
-    $sql2 = "SELECT d".$ri." FROM a".date("Ym") ." where nameid='".$row[0]."'";
+    $sql2 = "SELECT d".$ri." FROM a".date("Ym") ." where openid='".$openid."'";
 
     $result2 = mysqli_query($con,$sql2);
        $row2=mysqli_fetch_row($result2);
