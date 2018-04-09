@@ -5,11 +5,11 @@
       <button wx:if="{{!hasUserInfo && canIUse}}" open-type="getUserInfo" bindgetuserinfo="getUserInfo">微信登录</button>
     </view>
     <block wx:else>
-      <view wx:if="{{ userName && 1 }}">
+      <view wx:if="{{ getApp().globalData.userName }}">
         <image class="userinfo-avatar" src="{{userInfo.avatarUrl}}" background-size="cover"></image>
         <text class="userinfo-nickname">{{userInfo.nickName}}</text>
       </view>
-      <view wx:else>
+      <view wx:else style="display:{{ bindNameShow }}">
         <input type='text' placeholder='请绑定姓名后使用' class='nameinput' bindinput='inputChange' auto-focus></input>
         <button bindtap="bindName">绑定</button>
       </view>

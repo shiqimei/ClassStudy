@@ -56,7 +56,7 @@ Page({
     toptipTitle:'正在检查更新..',
     toptipShow:false,
     showIt:'false',
-    msg:'本次共学习5分钟',
+    bindNameShow:'',
   },
   //事件处理函数
   onLoad: function () {
@@ -96,7 +96,15 @@ Page({
       })
     } else {
       getApp().globalData.userName = inputValue
+      wx.setStorage({//将学生姓名保存至缓存中
+        key: 'name',
+        data: inputValue
+      })
       wxLogin(that)
+      this.setData({
+        bindNameShow: 'none',
+        hasUserInfo: true
+      })
     }
   },
   versionInfo: function () {
