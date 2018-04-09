@@ -30,7 +30,7 @@ function getGeo(that) {
       if (r <= accur) {
         that.setData({
           currentLocation: '生活区',
-          addressColor: 'orange',
+          addressColor: 'rgba(226, 88, 80,1)',
           currentRadius: ((100 - r * 1000) * 0.74074).toFixed(2)
         })
         console.log('生活区 ' + r)
@@ -55,6 +55,7 @@ function getGeo(that) {
           } else {
             that.setData({
               currentLocation: '未知区域',
+              addressColor: 'rgba(226, 88, 80,1)',
               currentRadius: ((100 - r * 1000) * 0.74074).toFixed(2)
             })
             console.log('未知区域 ' + r)
@@ -234,7 +235,7 @@ Page({
     buttonValue: '开始签到',
     currentLocation: '未知区域',
     currentRadius: '0.00',
-    addressColor: '#999',
+    addressColor: 'rgba(226, 88, 80, 1)',
     message: '',
     buttonBgColor: '#2f7ff0',
     messageBgColor:'#00c100',
@@ -258,8 +259,8 @@ Page({
         var initLoading = wx.showLoading({
           title: '正在定位中',
         })
-        setTimeout(function () { //调试flag：正式发布时请取消注释
-          if (/*that.data.currentLocation == '生活区' ||*/ that.data.currentLocation == '未知区域') {
+        setTimeout(function () { 
+          if (that.data.currentLocation == '生活区' || that.data.currentLocation == '未知区域') {
             playAudio(musicError)
             showMessage(that, '对不起,非自习区无法签到!', 'rgba(226, 88, 80,1)', 1500)
             wx.hideLoading(initLoading)
@@ -277,7 +278,7 @@ Page({
             if (that.data.buttonValue == '结束自习') {
               var cnt = 0 //开始自习后开始累计不在自习区的次数
               timer1 = setInterval(function () {
-                getGeo(that) //调试flag：正式发布时请取消注释
+                getGeo(that) 
                 if (that.data.currentLocation == '生活区' || that.data.currentLocation == '未知区域') {
                   cnt++
                 }
@@ -294,8 +295,8 @@ Page({
                   wxLogin(dTime2(timestart, timeend))
                   clearInterval(timer1)
                 }
-              }, 1000) //每60秒识别一下当前所在位置
-            } //调试flag：正式发布时请将时间改为60000
+              }, 60000) //每60秒识别一下当前所在位置
+            }
           }
         }, 8000)
       } else {

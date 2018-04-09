@@ -1,6 +1,6 @@
 /* pages/about/index.wxss */
 page {
-    background: rgba(249, 249, 251,1);
+    background: url('http://p40kjburh.bkt.clouddn.com/18-4-10/59467875.jpg');
 }
 
 .container {
@@ -10,13 +10,14 @@ page {
 button {
   width: 200rpx;
   margin-top:50rpx;
+  background: rgba(255, 255, 255,0.1);
 }
 
 .nameinput {
   line-height: 25px;
   font-size: 15px;
   border-radius: 5px;
-  box-shadow: 0 0 0 0.5px #999;
+  box-shadow: 0 0 0 0.5px rgba(200, 200, 200,1);
   padding: 5px;
   margin-top:10px;
   margin-bottom:30px;
@@ -51,8 +52,8 @@ button {
   line-height: 40px;
   height: 40px;
   width: 93%;
-  background: #fff;
-  box-shadow:0 0 0 0.5px #cdcdcd;
+  background: rgba(255, 255, 255,0.3);
+  box-shadow:0 0 0 0.5px rgba(230, 230, 230,0.8);
   text-align: left;
   padding-left: 7%;
 }
