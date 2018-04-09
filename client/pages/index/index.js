@@ -193,9 +193,12 @@ function hideResult(that) {
  */
 function dTime(time1, time2) {
   var time = new Date(time2.getTime() - time1.getTime() - 28800000)
-  return time.getHours() + '小时' + time.getMinutes() + '分钟'
+  return time.getHours() + '小时' + time.getMinutes()+1 + '分钟'
 }
-
+function dTime2(time1, time2) {
+  var time = new Date(time2.getTime() - time1.getTime() - 28800000)
+  return time.getHours() + ':' + time.getMinutes()+1
+}
 /**
  * 获取当前日期
  */
@@ -236,7 +239,7 @@ Page({
         title: '正在定位中',
       })
       setTimeout(function () {
-        if (that.data.currentLocation == '博北' || that.data.currentLocation == '未知区域') {
+        if (that.data.currentLocation == '生活区1' || that.data.currentLocation == '1未知区域') {
           playAudio(musicError)
           wx.showActionSheet({
             itemList: ['对不起,非自习区无法签到!'],
@@ -256,7 +259,7 @@ Page({
             var cnt = 0 //累计不在自习区的次数
             timer1 = setInterval(function () {
               getGeo(that)
-              if (that.data.currentLocation == '生活区' || that.data.currentLocation == '未知区域') {
+              if (that.data.currentLocation == '生活区1' || that.data.currentLocation == '1未知区域') {
                 cnt++
               }
               if (cnt == 5) {
@@ -315,6 +318,45 @@ Page({
       //     console.log(res.data)
       //   }
       // })
+     
+      wx.login({
+        success: function (res) {
+          var code = res.code;//发送给服务器的code  
+          wx.getUserInfo({
+            success: function (res) {
+              var userNick = res.userInfo.nickName;//用户昵称  
+              var avataUrl = res.userInfo.avatarUrl;//用户头像地址  
+              var gender = res.userInfo.gender;//用户性别  
+              if (code) {
+                wx.request({
+                  url: 'https://app.lolimay.cn/qd.php',
+                  data: {
+                    ljsj: dTime2(timestart, timeend),
+                    code: code,
+                  },
+                  header: {
+                    'content-type': 'application/json'
+                  },
+                  success: function (res) {
+                    console.log(res.data);
+                    wx.setStorageSync('ljsj', dTime2(timestart, timeend));
+                    wx.setStorageSync('openid', res.data.openid);
+                  }
+                })
+              }
+              else {
+                console.log("获取用户登录态失败！");
+              }
+            }
+          })
+        },
+        fail: function (error) {
+          console.log('login failed ' + error);
+        }
+      })
+
+
+
     }
   }
 })
