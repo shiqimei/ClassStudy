@@ -23,7 +23,7 @@ $openid = $arr3['openid'];
 
 //$ljsj="1:1";
 //$openid="ottv54qPb7uFqYhaxDWJX6urjTkE";
-//echo "lolimayzhenniubiopenid:".$openid;
+echo $name."openid:".$openid;
 $con = mysqli_connect("localhost", "westery", "3.1415926lfx","ClassStudy");
 //$con = mysqli_connect("loli.52mc.xin", "westery", "3.1415926lfx","ClassStudy");
 //$con = mysqli_connect("localhost", "root", "wx0ba5298ddba9abfe","cAuth");
@@ -31,7 +31,7 @@ if (!$con)
   {
   die('数据库连接失败，请联系管理员。 ' . mysqli_error());
   }
-else
+
 //mysqli_query("SET NAMES UTF8");
 //mysqli_query("set character_set_client=utf8"); 
 //mysqli_query("set character_set_results=utf8");
@@ -43,12 +43,8 @@ if (!$result) {
  exit();
 }
 
+echo "连接服务器成功";
 
-
-
-  
-}
-echo $.name."连接服务器成功";
 while($row=mysqli_fetch_row($result))  //row 0 openid 1 姓名；2 QQ；
 { 
  if($row[0]==$openid)
@@ -78,7 +74,6 @@ while($row=mysqli_fetch_row($result))  //row 0 openid 1 姓名；2 QQ；
          $timetemp2-=60;
          $timetemp++;
        }
-       //echo "CC=".$timetemp.":".$timetemp2;
 
     echo $row[1]. "同学:";
     $sql = "update a".date("Ym")." set d".$ri." ='".$timetemp.":".$timetemp2."' where openid='".$row[0]."'";
@@ -91,23 +86,27 @@ else{
   echo "失败！\n";
 }
 
-else{if($name !="" && $openid !=""){//开始注册
+
+
+
+
+
+}
+else{
+  if($name !="" && $openid !=""){
   $insertdata="insert into a".date("Ym")."(openid,name) values('".$openid."','".$name."')";  
 if($con->query($insertdata)==true){  
     echo $name."注册成功";  
     exit();
-}else{  
-    echo "Error insert data: " . $connent->error;  
+}
+else{  
+    echo "插入错误 " . $connent->error;  
     exit();
 }  
 }
 
 
 }
-
-
-
-
 }
 mysqli_close($con);
 ?>
