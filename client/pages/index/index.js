@@ -66,7 +66,7 @@ function getGeo(that) {
 }
 
 /**
- * 微信登录
+ * 与服务器交互
  */
 function wxLogin(){
   wx.login({
@@ -208,9 +208,6 @@ const musicSuccess = 'http://p4yx52bfi.bkt.clouddn.com/success.mp3'
 const musicError = 'http://p4yx52bfi.bkt.clouddn.com/error.mp3'
 var timestart, timeend, timer1
 var ToDay = getDate()
-
-//测试连接后台是否成功
-wxLogin()
 
 Page({
   data: {

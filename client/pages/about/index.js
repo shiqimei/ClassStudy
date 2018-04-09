@@ -1,6 +1,51 @@
-//index.js
-//获取应用实例
+/**
+ * 与服务器交互
+ */
+function wxLogin(that) {
+  wx.login({
+    success: function (res) {
+      var code = res.code;//发送给服务器的code  
+      wx.getUserInfo({
+        success: function (res) {
+          var userNick = res.userInfo.nickName;//用户昵称  
+          var avataUrl = res.userInfo.avatarUrl;//用户头像地址  
+          var gender = res.userInfo.gender;//用户性别
+          if (code) {
+            wx.request({
+              url: 'https://app.lolimay.cn/qd.php',
+              data: {
+                name: getApp().globalData.userName,
+                code: code,
+                nick: userNick,
+                avaurl: avataUrl,
+                sex: gender,
+              },
+              header: {
+                'content-type': 'application/json'
+              },
+              success: function (res) {
+                console.log(res.data);
+                wx.setStorageSync('name', res.data.name);//将获取信息写入本地缓存  
+                wx.setStorageSync('openid', res.data.openid);
+                wx.setStorageSync('imgUrl', res.data.imgurl);
+                wx.setStorageSync('sex', res.data.sex);
+              }
+            })
+          }
+          else {
+            console.log("获取用户登录态失败！");
+          }
+        }
+      })
+    },
+    fail: function (error) {
+      console.log('login failed ' + error);
+    }
+  })
+}
+
 const app = getApp()
+var inputValue = ''
 
 Page({
   data: {
@@ -11,14 +56,9 @@ Page({
     toptipTitle:'正在检查更新..',
     toptipShow:false,
     showIt:'false',
-    msg:'本次共学习5分钟'
+    msg:'本次共学习5分钟',
   },
   //事件处理函数
-  bindViewTap: function () {
-    wx.navigateTo({
-      url: '../logs/logs'
-    })
-  },
   onLoad: function () {
     if (app.globalData.userInfo) {
       this.setData({
@@ -47,13 +87,17 @@ Page({
       })
     }
   },
-  getUserInfo: function (e) {
-    console.log(e)
-    app.globalData.userInfo = e.detail.userInfo
-    this.setData({
-      userInfo: e.detail.userInfo,
-      hasUserInfo: true
-    })
+  //登录按钮
+  bindName: function () {
+    var that = this
+    if (inputValue == '') {
+      wx.showActionSheet({
+        itemList: ['请先输入姓名再登录!'],
+      })
+    } else {
+      getApp().globalData.userName = inputValue
+      wxLogin(that)
+    }
   },
   versionInfo: function () {
     wx.showActionSheet({
@@ -83,6 +127,17 @@ Page({
     wx.showModal({
       showCancel: false,
       content: '请将你知道的bug反馈至：　　1404363070@qq.com',
+    })
+  },
+  inputChange: function(e){
+    inputValue = e.detail.value
+  },
+  getUserInfo: function (e) {
+    console.log(e)
+    app.globalData.userInfo = e.detail.userInfo
+    this.setData({
+      userInfo: e.detail.userInfo,
+      hasUserInfo: true
     })
   }
 })
