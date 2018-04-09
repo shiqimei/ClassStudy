@@ -95,7 +95,7 @@ Page({
     toptipShow:false,
     showIt:'false',
     bindNameShow:'',
-    isNameExisted: ''
+    isBinded:false
   },
   //事件处理函数
   onLoad: function () {
@@ -150,7 +150,7 @@ Page({
       wxLogin(that)
       this.setData({
         bindNameShow: 'none',
-        hasUserInfo: true,
+        isBinded: true,
         userInfo: getApp().globalData.userInfo
       })
     }

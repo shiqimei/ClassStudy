@@ -2,10 +2,10 @@
 <view class="container">
   <view class="userinfo">
     <view wx:if="{{!hasUserInfo && canIUse}}">
-      <button wx:if="{{!hasUserInfo && canIUse}}" open-type="getUserInfo" bindgetuserinfo="getUserInfo">微信登录</button>
+      <button wx:if="{{!hasUserInfo && canIUse}}" open-type="getUserInfo" bindgetuserinfo="getUserInfo">登录</button>
     </view>
     <block wx:else>
-      <view wx:if="{{ isNameExisted }}">
+      <view wx:if="{{ isBinded }}">
         <image class="userinfo-avatar" src="{{userInfo.avatarUrl}}" background-size="cover"></image>
         <text class="userinfo-nickname">{{userInfo.nickName}}</text>
       </view>
