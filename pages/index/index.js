@@ -205,6 +205,23 @@ function getDate(){
   return time.getDate()
 }
 
+/**
+ * 淡出动画
+ */
+function fadeOut(that){
+  var animation = wx.createAnimation({
+    transformOrigin: "50% 50%",
+    duration: 200,
+    timingFunction: 'linear',
+    delay: 0
+  })
+  that.animation = animation
+  that.animation.opacity(0).scale(0, 0).step()
+  that.setData({
+    animationData: animation.export()
+  })
+}
+
 const musicSuccess = 'http://p4yx52bfi.bkt.clouddn.com/success.mp3'
 const musicError = 'http://p4yx52bfi.bkt.clouddn.com/error.mp3'
 var timestart, timeend, timer1
@@ -224,6 +241,7 @@ Page({
     resultTime:'',
     msgStatus: 'none',
     resultStatus:'none',
+    animationData:''
   },
   tapButton: function () {
     var that = this
@@ -293,5 +311,8 @@ Page({
         wxLogin(dTime2(timestart, timeend))
       }
     }
+  },
+  tapAnimation:function(){
+    fadeOut(this)
   }
 })
