@@ -44,6 +44,45 @@ function wxLogin(that) {
   })
 }
 
+/**
+ * 获取用户名字
+ */
+function getName(that) {
+  wx.login({
+    success: function (res) {
+      var code = res.code;//发送给服务器的code  
+      wx.getUserInfo({
+        success: function (res) {
+          if (code) {
+            wx.request({
+              url: 'https://app.lolimay.cn/name.php',
+              data: {
+                code: code,
+              },
+              header: {
+                'content-type': 'application/json'
+              },
+              success: function (res) {
+                console.log(res.data)
+                getApp().globalData.userName = res.data
+                that.setData({
+                  isNameExisted: true
+                })
+              }
+            })
+          }
+          else {
+            console.log("获取用户登录态失败！");
+          }
+        }
+      })
+    },
+    fail: function (error) {
+      console.log('login failed ' + error);
+    }
+  })
+}
+
 const app = getApp()
 var inputValue = ''
 
@@ -57,9 +96,13 @@ Page({
     toptipShow:false,
     showIt:'false',
     bindNameShow:'',
+    isNameExisted: ''
   },
   //事件处理函数
   onLoad: function () {
+    var that = this
+    //判断用户是否已经绑定用户名
+    getName(that)
     if (app.globalData.userInfo) {
       this.setData({
         userInfo: app.globalData.userInfo,
@@ -96,14 +139,17 @@ Page({
       })
     } else {
       getApp().globalData.userName = inputValue
-      wx.setStorage({//将学生姓名保存至缓存中
-        key: 'name',
-        data: inputValue
-      })
+      wx.setStorageSync('name', inputValue) //强制将学生姓名保存至缓存中
+      while (!wx.getStorageSync('name')) {
+        setTimeout(function(){
+          wx.setStorageSync('name', inputValue)
+        },200)
+      }
       wxLogin(that)
       this.setData({
         bindNameShow: 'none',
-        hasUserInfo: true
+        hasUserInfo: true,
+        userInfo: getApp().globalData.userInfo
       })
     }
   },

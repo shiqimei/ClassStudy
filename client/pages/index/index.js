@@ -205,6 +205,45 @@ function getDate(){
   return time.getDate()
 }
 
+/**
+ * 获取用户名字
+ */
+function getName(that) {
+  wx.login({
+    success: function (res) {
+      var code = res.code;//发送给服务器的code  
+      wx.getUserInfo({
+        success: function (res) {
+          if (code) {
+            wx.request({
+              url: 'https://app.lolimay.cn/name.php',
+              data: {
+                code: code,
+              },
+              header: {
+                'content-type': 'application/json'
+              },
+              success: function (res) {
+                console.log(res.data)
+                getApp().globalData.userName = res.data
+                that.setData({
+                  isNameExisted: true
+                })
+              }
+            })
+          }
+          else {
+            console.log("获取用户登录态失败！");
+          }
+        }
+      })
+    },
+    fail: function (error) {
+      console.log('login failed ' + error);
+    }
+  })
+}
+
 const musicSuccess = 'http://p4yx52bfi.bkt.clouddn.com/success.mp3'
 const musicError = 'http://p4yx52bfi.bkt.clouddn.com/error.mp3'
 var timestart, timeend, timer1
@@ -223,7 +262,12 @@ Page({
     messageBgColor:'#00c100',
     resultTime:'',
     msgStatus: 'none',
-    resultStatus:'none'
+    resultStatus:'none',
+    isNameExisted = false
+  },
+  onLoad: function() {
+    var that = this
+    getName()
   },
   tapButton: function () {
     var that = this

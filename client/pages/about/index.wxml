@@ -5,7 +5,7 @@
       <button wx:if="{{!hasUserInfo && canIUse}}" open-type="getUserInfo" bindgetuserinfo="getUserInfo">微信登录</button>
     </view>
     <block wx:else>
-      <view wx:if="{{ getApp().globalData.userName }}">
+      <view wx:if="{{ isNameExisted }}">
         <image class="userinfo-avatar" src="{{userInfo.avatarUrl}}" background-size="cover"></image>
         <text class="userinfo-nickname">{{userInfo.nickName}}</text>
       </view>
