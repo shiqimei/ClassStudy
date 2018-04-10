@@ -1,4 +1,10 @@
 /* pages/graph/index.wxss */
-page {
+ page {
     background: url('http://p40kjburh.bkt.clouddn.com/18-4-10/59467875.jpg');
+} 
+
+/**index.wxss**/
+ec-canvas {
+  width: 100%;
+  height: 100%;
 }

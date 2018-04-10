@@ -1,4 +1,4 @@
 <!--index.wxml-->
 <view class="container">
-  该功能还在建设中~
+  <ec-canvas id="mychart-dom-bar" canvas-id="mychart-bar" ec="{{ ec }}"></ec-canvas>
 </view>
