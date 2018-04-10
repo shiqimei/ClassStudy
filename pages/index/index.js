@@ -33,13 +33,14 @@ Page({
         var initLoading = wx.showLoading({
           title: '正在定位中',
         })
-        setTimeout(function () { 
-          if (that.data.currentLocation == '生活区' || that.data.currentLocation == '未知区域') {
+        setTimeout(function () { //
+          if (/*that.data.currentLocation == '生活区' ||*/ that.data.currentLocation == '未知区域') {
             playAudio(musicError)
             showMessage(that, '对不起,非自习区无法签到!', 'rgba(226, 88, 80,1)', 1500)
             wx.hideLoading(initLoading)
           } else { //符合签到条件
             timestart = new Date()
+            wx.setStorageSync('key', 'value') //
             playAudio(musicSuccess)
             that.setData({
               time1: timestart.format('hh:mm:ss'),

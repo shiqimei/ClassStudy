@@ -16,8 +16,8 @@
     </block>
   </view>
   <view class="list middle" bindtap="updateLog">更新记录</view>
-  <view class="list top" bindtap="versionInfo">版本信息</view>
-  <view class="list bottom" bindtap="aboutUs">关于我们</view>
-  <view class="list bottom" bindtap="bugTo">反馈BUG</view>
-  <weapp-toptip delay="2000" type="{{ toptipType }}" title="{{ toptipTitle }}" />
+  <view class="list" bindtap="versionInfo">版本信息</view>
+  <view class="list" bindtap="aboutUs">关于我们</view>
+  <view class="list" bindtap="{{ buttonUpdate }}">检查更新</view>
+  <view class="list" bindtap="bugTo">反馈BUG</view>
 </view>
