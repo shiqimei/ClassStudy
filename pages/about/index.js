@@ -54,13 +54,6 @@ Page({
         itemList: ['请先输入姓名再登录!'],
       })
     } else {
-      getApp().globalData.userName = inputValue
-      wx.setStorageSync('name', inputValue) //强制将学生姓名保存至缓存中
-      while (!wx.getStorageSync('name')) {
-        setTimeout(function(){
-          wx.setStorageSync('name', inputValue)
-        },200)
-      }
       wxLogin(that)
       this.setData({
         bindNameShow: 'none',
@@ -115,7 +108,27 @@ Page({
     this.setData({
       checkUpdate:true
     })
+  },
+  onReady: function () {
+    //获得dialog组件
+    this.dialog = this.selectComponent("#dialog");
+  },
+
+  showDialog() {
+    this.dialog.showDialog();
+  },
+
+  //取消事件
+  _cancelEvent() {
+    console.log('你点击了取消');
+    this.dialog.hideDialog();
+  },
+  //确认事件
+  _confirmEvent() {
+    console.log('你点击了确定');
+    this.dialog.hideDialog();
   }
+
 })
 
 /**
@@ -145,10 +158,6 @@ function wxLogin(that) {
               },
               success: function (res) {
                 console.log(res.data);
-                wx.setStorageSync('name', res.data.name);//将获取信息写入本地缓存  
-                wx.setStorageSync('openid', res.data.openid);
-                wx.setStorageSync('imgUrl', res.data.imgurl);
-                wx.setStorageSync('sex', res.data.sex);
               }
             })
           }

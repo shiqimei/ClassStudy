@@ -20,4 +20,17 @@
   <view class="list" bindtap="aboutUs">关于我们</view>
   <view class="list" bindtap="{{ buttonUpdate }}">检查更新</view>
   <view class="list" bindtap="bugTo">反馈BUG</view>
+  <!--index.wxml-->
+<view class="container">
+    <dialog id='dialog' 
+      title='我是标题' 
+      content='恭喜你，学会了小程序组件' 
+      cancelText='知道了' 
+      confirm='谢谢你'
+      bind:cancelEvent="_cancelEvent"  
+      bind:confirmEvent="_confirmEvent">
+    </dialog>
+    
+    <button type="primary" bindtap="showDialog"> ClickMe! </button>
+</view>
 </view>
