@@ -15,7 +15,7 @@
       </view>
     </block>
   </view>
-  <view class="list middle" bindtap="updateLog">更新记录</view>
+  <view class="list" bindtap="updateLog">更新记录</view>
   <view class="list" bindtap="versionInfo">版本信息</view>
   <view class="list" bindtap="aboutUs">关于我们</view>
   <view class="list" bindtap="{{ buttonUpdate }}">检查更新</view>
