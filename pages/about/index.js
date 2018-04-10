@@ -80,18 +80,6 @@ Page({
   updateIt: {
 
   },
-  aboutUs:function(){
-    wx.showModal({
-      showCancel:false,
-      content: '安徽大学17级软件工程班级自习自助签到系统　　　　　　\t　　软件作者:@LoliMay(前端)、@Watermelon(后台)',
-    })
-  },
-  bugTo: function () {
-    wx.showModal({
-      showCancel: false,
-      content: '请将你知道的bug反馈至：　　1404363070@qq.com',
-    })
-  },
   inputChange: function(e){
     inputValue = e.detail.value
   },
@@ -112,23 +100,14 @@ Page({
   onReady: function () {
     //获得dialog组件
     this.dialog = this.selectComponent("#dialog");
+    this.bugToDialog = this.selectComponent('#bugToDialog')
   },
-
-  showDialog() {
-    this.dialog.showDialog();
+  aboutUs:function() {
+    this.dialog.showDialog();   
   },
-
-  //取消事件
-  _cancelEvent() {
-    console.log('你点击了取消');
-    this.dialog.hideDialog();
-  },
-  //确认事件
-  _confirmEvent() {
-    console.log('你点击了确定');
-    this.dialog.hideDialog();
+  bugTo:function(){
+    this.bugToDialog.showDialog();
   }
-
 })
 
 /**

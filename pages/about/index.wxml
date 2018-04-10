@@ -18,19 +18,17 @@
   <view class="list" bindtap="updateLog">更新记录</view>
   <view class="list" bindtap="versionInfo">版本信息</view>
   <view class="list" bindtap="aboutUs">关于我们</view>
-  <view class="list" bindtap="{{ buttonUpdate }}">检查更新</view>
   <view class="list" bindtap="bugTo">反馈BUG</view>
-  <!--index.wxml-->
-<view class="container">
-    <dialog id='dialog' 
-      title='我是标题' 
-      content='恭喜你，学会了小程序组件' 
-      cancelText='知道了' 
-      confirm='谢谢你'
-      bind:cancelEvent="_cancelEvent"  
-      bind:confirmEvent="_confirmEvent">
-    </dialog>
-    
-    <button type="primary" bindtap="showDialog"> ClickMe! </button>
-</view>
+  <dialog 
+    id='dialog'
+    title='安徽大学17级软件工程班级自习自助签到系统'
+    content='\nLoliMay（前端）\nWatermelon（后台）'
+    bind:confirmEvent="_confirmEvent">
+  </dialog>
+  <dialog 
+    id='bugToDialog'
+    title='请将你所知道的BUG反馈至\n'
+    content='1404363070@qq.com'
+    bind:confirmEvent="_confirmEvent">
+  </dialog>
 </view>

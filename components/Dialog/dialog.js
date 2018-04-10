@@ -63,13 +63,12 @@ Component({
     * 内部私有方法建议以下划线开头
     * triggerEvent 用于触发事件
     */
-    _cancelEvent() {
-      //触发取消回调
-      this.triggerEvent("cancelEvent")
-    },
+
     _confirmEvent() {
       //触发成功回调
-      this.triggerEvent("confirmEvent");
+      this.setData({
+        isShow: !this.data.isShow
+      })
     }
   }
 })

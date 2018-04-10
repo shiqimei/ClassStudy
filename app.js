@@ -1,4 +1,3 @@
-//app.js
 App({
   onLaunch: function () {
     // 展示本地存储能力
@@ -33,5 +32,11 @@ App({
   },
   globalData: {
     userInfo: null,
+    time1:''
   }
 })
+
+var time1 = wx.getStorageSync('time1')
+if (time1 != '') {
+  getApp().globalData.time1 = time1
+}

@@ -18,6 +18,16 @@ Page({
     resultStatus:'none',
     animationData:''
   },
+  onLoad: function(){
+    if (getApp().globalData.time1 != '') {
+      timestart = getApp().globalData.time1 //timestart从缓存中加载时间
+      this.setData({
+        time1: new Date(getApp().globalData.time1).format('hh:mm:ss'),
+        buttonValue: '结束自习',
+        buttonBgColor: '#cc4125'
+      })
+    }
+  },
   tapButton: function () {
     var that = this
     if (getApp().globalData.userInfo==null) {
@@ -33,14 +43,14 @@ Page({
         var initLoading = wx.showLoading({
           title: '正在定位中',
         })
-        setTimeout(function () { //
+        setTimeout(function () {
           if (/*that.data.currentLocation == '生活区' ||*/ that.data.currentLocation == '未知区域') {
             playAudio(musicError)
             showMessage(that, '对不起,非自习区无法签到!', 'rgba(226, 88, 80,1)', 1500)
             wx.hideLoading(initLoading)
           } else { //符合签到条件
             timestart = new Date()
-            wx.setStorageSync('key', 'value') //
+            wx.setStorageSync('time1', timestart)
             playAudio(musicSuccess)
             that.setData({
               time1: timestart.format('hh:mm:ss'),
@@ -54,6 +64,8 @@ Page({
         }, 8000)
       } else {
         timeend = new Date()
+        console.log('本次自习时间'+(timeend-timestart))
+        wx.setStorageSync('time1', '')  //清空本地时间缓存
         showMessage(that, '签退成功', '#00c100', 1500)
         playAudio(musicSuccess)
         that.setData({
