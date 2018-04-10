@@ -2,7 +2,6 @@
   <text id="message" class="notice" style="display:{{ msgStatus }};background:{{ messageBgColor }}" bindtap='tapAnimation' animation="{{ animationData }}">{{ message }}</text>    
   <text class="address">
     <text style="color:{{ addressColor }}">{{ currentLocation }} </text>
-    <text class="radius"> {{ currentRadius }}</text>
   </text>
   <view class="circle">
     <text>

@@ -65,9 +65,12 @@ function getName(that) {
               success: function (res) {
                 console.log(res.data)
                 getApp().globalData.userName = res.data
-                that.setData({
-                  isBinded: true
-                })
+                if(res.data!=''){
+                  that.setData({
+                    isBinded: true,
+                    inputFocus: false
+                  })
+                }
               }
             })
           }
@@ -95,7 +98,8 @@ Page({
     toptipShow:false,
     showIt:'false',
     bindNameShow:'',
-    isBinded:false
+    isBinded:false,
+    inputFocus:true
   },
   //事件处理函数
   onLoad: function () {

@@ -10,7 +10,7 @@
         <text class="userinfo-nickname">{{userInfo.nickName}}</text>
       </view>
       <view wx:else style="display:{{ bindNameShow }}">
-        <input type='text' placeholder='请绑定姓名后使用' class='nameinput' bindinput='inputChange' auto-focus></input>
+        <input type='text' placeholder='请绑定姓名后使用' class='nameinput' bindinput='inputChange' auto-focus="{{ inputFocus }}"></input>
         <button bindtap="bindName">绑定</button>
       </view>
     </block>
