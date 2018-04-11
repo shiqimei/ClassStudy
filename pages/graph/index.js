@@ -6,7 +6,7 @@ var that
 Page({
   data: {
     ec: {
-      onInit: initChart
+      lazyLoad: true
     },
     isLogin: true,
     week:''
@@ -26,21 +26,40 @@ Page({
     }
   },
   onReady() {
+    var that = this
+    this.ecComponent = this.selectComponent('#mychart-dom-bar');
     setTimeout(function () {
       console.log(chart)
-    }, 2000);
+      lazyLoad(that)
+    }, 3000);
   }
 });
 
 /**
- * 绘制图表
+ * 时间格式化工具
  */
-function initChart(canvas, width, height) {
-  chart = echarts.init(canvas, null, {
-    width: width,
-    height: height
-  });
-  canvas.setChart(chart);
+function timify(value) {
+  var hour = Math.floor((value / 60))
+  var min = Math.floor((value % 60))
+  if (hour < 10) {
+    if (min < 10) {
+      return '0' + hour + ':0' + min
+    } else {
+      return '0' + hour + ':' + min
+    }
+  } else {
+    if (min < 10) {
+      return hour + ':0' + min
+    } else {
+      return hour + ':' + min
+    }
+  }
+}
+
+/**
+ * 懒加载图表配置
+ */
+function setOption(chart) {
   var chartData = getApp().globalData.chartData
   var names = []
   for (var key in chartData.sum) {
@@ -159,28 +178,31 @@ function initChart(canvas, width, height) {
       }
     ]
   };
-
   chart.setOption(option);
-  return chart;
 }
 
 /**
- * 时间格式化工具
+ * 懒加载图表初始化
  */
-function timify(value) {
-  var hour = Math.floor((value / 60))
-  var min = Math.floor((value % 60))
-  if (hour < 10) {
-    if (min < 10) {
-      return '0' + hour + ':0' + min
-    } else {
-      return '0' + hour + ':' + min
-    }
-  } else {
-    if (min < 10) {
-      return hour + ':0' + min
-    } else {
-      return hour + ':' + min
-    }
-  }
+function lazyLoad(that) {
+  that.ecComponent.init((canvas, width, height) => {
+    // 获取组件的 canvas、width、height 后的回调函数
+    // 在这里初始化图表
+    const chart = echarts.init(canvas, null, {
+      width: width,
+      height: height
+    });
+    setOption(chart)
+
+    // 将图表实例绑定到 this 上，可以在其他成员函数（如 dispose）中访问
+    that.chart = chart
+
+    that.setData({
+      isLoaded: true,
+      isDisposed: false
+    });
+
+    // 注意这里一定要返回 chart 实例，否则会影响事件处理等
+    return chart;
+  })
 }

@@ -1,8 +1,8 @@
 <!--index.wxml-->
 <view class="container">
-<view wx:if="{{ !isLogin }}" class="notice">请在登录之后使用本功能</view>
-<view wx:else>
-  <text class='chartTitle'>17级软工班级自习表</text><text class="week"> 第{{ week }}周</text>
-  <ec-canvas wx:if="{{!isDisposed}}" id="mychart-dom-bar" canvas-id="mychart-bar" ec="{{ ec }}"></ec-canvas>
-</view>
+  <view wx:if="{{ !isLogin }}" class="notice">请在登录之后使用本功能</view>
+  <view wx:else>
+    <text class='chartTitle'>17级软工班级自习表</text><text class="week"> 第{{ week }}周</text>
+    <ec-canvas id="mychart-dom-bar" canvas-id="mychart-bar" ec="{{ ec }}"></ec-canvas>
+  </view>
 </view>

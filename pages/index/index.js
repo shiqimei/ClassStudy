@@ -46,7 +46,7 @@ Page({
           stuAddress: '未知区域'
         })
         setTimeout(function () {//调试flag发布时请将下面的注释取消
-          if (/*that.data.currentLocation == '生活区' ||*/ that.data.currentLocation == '未知区域') {
+          if (/*that.data.currentLocation == '生活区' || that.data.currentLocation == '未知区域'*/false) {
             playAudio(musicError)
             showMessage(that, '对不起,非自习区无法签到!', 'rgba(226, 88, 80,1)', 1500)
             wx.hideLoading(initLoading)
@@ -66,7 +66,7 @@ Page({
         }, 1000)
       } else {
         setTimeout(function () {//调试flag发布时请将下面的注释取消
-          if (/*that.data.currentLocation == '生活区' ||*/ that.data.currentLocation == '未知区域') {
+          if (/*that.data.currentLocation == '生活区' || that.data.currentLocation == '未知区域'*/false) {
             playAudio(musicError)
             showMessage(that, '对不起,非自习区无法签退!', 'rgba(226, 88, 80,1)', 1500)
             wx.hideLoading(initLoading)
@@ -181,7 +181,7 @@ function wxLogin(that,dTime) {
                 console.log(res.data);
                 setTimeout(function(){
                   showMessage(that, '今日共学习：'+res.data.match(/\d\S+分钟/), '#00c100', 3000)
-                },3000)
+                },5000)
               }
             })
           }
