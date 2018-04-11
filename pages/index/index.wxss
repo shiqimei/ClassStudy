@@ -76,15 +76,14 @@ page {
 }
 
 .result {
-  border-radius: 5px;
-  box-shadow: 0 0 5px 0.5px rgba(25, 125, 191,0.05);
-  background: rgba(25, 125, 191,0.0);
-  font-weight: 900;
+  color: rgba(253, 100, 0,0.7);
+  box-shadow: 0 0 10px 1px rgba(30, 30, 30,0.04);
+  background:rgba(255, 255, 255,0);
   padding: 5px 2.5%;
   width: 70%;
-  color: rgba(226, 88, 80,0.8);
   margin-top:100rpx;
   font-size: 15px;
   text-align: center;
   letter-spacing: 1px;
+  border-radius: 5px;
 }

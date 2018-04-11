@@ -83,7 +83,7 @@ Page({
               time2: timeend.format('hh:mm:ss')
             })
             showResult(that, dTime(timestart, timeend), 0)
-            wxLogin(dTime2(timestart, timeend))
+            wxLogin(that,dTime2(timestart, timeend))
           }
         }, 1000)
       }
@@ -161,15 +161,12 @@ function getGeo(that) {
 /**
  * 与服务器交互
  */
-function wxLogin(dTime) {
+function wxLogin(that,dTime) {
   wx.login({
     success: function (res) {
       var code = res.code;//发送给服务器的code  
       wx.getUserInfo({
         success: function (res) {
-          var userNick = res.userInfo.nickName;//用户昵称  
-          var avataUrl = res.userInfo.avatarUrl;//用户头像地址  
-          var gender = res.userInfo.gender;//用户性别  
           if (code) {
             wx.request({
               url: 'https://app.lolimay.cn/qd.php',
@@ -182,10 +179,9 @@ function wxLogin(dTime) {
               },
               success: function (res) {
                 console.log(res.data);
-                wx.setStorageSync('name', res.data.name);//将获取信息写入本地缓存  
-                wx.setStorageSync('openid', res.data.openid);
-                wx.setStorageSync('imgUrl', res.data.imgurl);
-                wx.setStorageSync('sex', res.data.sex);
+                setTimeout(function(){
+                  showMessage(that, '今日共学习：'+res.data.match(/\d\S+分钟/), '#00c100', 3000)
+                },3000)
               }
             })
           }
