@@ -126,7 +126,7 @@ function wxLogin(that) {
             wx.request({
               url: 'https://app.lolimay.cn/qd.php',
               data: {
-                name: getApp().globalData.userName,
+                name: inputValue,
                 code: code,
                 nick: userNick,
                 avaurl: avataUrl,

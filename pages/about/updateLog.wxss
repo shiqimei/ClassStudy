@@ -1,6 +1,6 @@
 /* pages/about/updateLog.wxss */
 page {
-    background: rgba(249, 249, 251,1);
+    background: url('http://p40kjburh.bkt.clouddn.com/18-4-10/59467875.jpg');
     padding: 25px;
     display: block;
 }
