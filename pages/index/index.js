@@ -12,13 +12,13 @@ Page({
     addressColor: 'rgba(226, 88, 80, 1)',
     message: '',
     buttonBgColor: '#2f7ff0',
-    messageBgColor:'#00c100',
-    resultTime:'',
+    messageBgColor: '#00c100',
+    resultTime: '',
     msgStatus: 'none',
-    resultStatus:'none',
-    animationData:''
+    resultStatus: 'none',
+    animationData: ''
   },
-  onLoad: function(){
+  onLoad: function () {
     var that = this
     if (getApp().globalData.time1 != '') {
       timestart = getApp().globalData.time1 //timestart从缓存中加载时间
@@ -31,7 +31,7 @@ Page({
   },
   tapButton: function () {
     var that = this
-    if (getApp().globalData.userInfo==null) {
+    if (getApp().globalData.userInfo == null) {
       playAudio(musicError)
       showMessage(that, '请先登录并绑定姓名', 'rgba(226, 88, 80,1)', 1500)
     } else {
@@ -44,7 +44,7 @@ Page({
         this.setData({
           stuAddress: '未知区域'
         })
-        setTimeout(function () {
+        setTimeout(function () {//调试flag发布时请将下面的注释取消
           if (/*that.data.currentLocation == '生活区' ||*/ that.data.currentLocation == '未知区域') {
             playAudio(musicError)
             showMessage(that, '对不起,非自习区无法签到!', 'rgba(226, 88, 80,1)', 1500)
@@ -64,7 +64,7 @@ Page({
           }
         }, 1000)
       } else {
-        setTimeout(function(){
+        setTimeout(function () {//调试flag发布时请将下面的注释取消
           if (/*that.data.currentLocation == '生活区' ||*/ that.data.currentLocation == '未知区域') {
             playAudio(musicError)
             showMessage(that, '对不起,非自习区无法签退!', 'rgba(226, 88, 80,1)', 1500)
@@ -84,11 +84,11 @@ Page({
             showResult(that, dTime(timestart, timeend), 0)
             wxLogin(dTime2(timestart, timeend))
           }
-        },1000)
+        }, 1000)
       }
     }
   },
-  tapAnimation:function(){
+  tapAnimation: function () {
     fadeOut(this)
   }
 })
@@ -120,21 +120,21 @@ function getGeo(that) {
       lati = res.latitude
       long = res.longitude
       console.log(res.latitude, res.longitude)
-      r = getDistance(lati, long, 31.770643, 117.18303)
-      if (r <= 0.001) {
+      r = getDistance(lati, long, 31.7686843626, 117.1848374605)
+      if (r <= 0.002) {//优先检测博北
         that.setData({
-          currentLocation: '生活区',
-          addressColor: 'rgba(226, 88, 80,1)',
+          currentLocation: '博北',
+          addressColor: 'green',
         })
-        console.log('生活区 ' + r)
+        console.log('博北 ' + r)
       } else {
-        r = getDistance(lati, long, 31.7686843626, 117.1848374605)
-        if (r <= 0.002) {
+        r = getDistance(lati, long, 31.770643, 117.18303)
+        if (r <= 0.001) {
           that.setData({
-            currentLocation: '博北',
-            addressColor: 'green',
+            currentLocation: '生活区',
+            addressColor: 'rgba(226, 88, 80,1)',
           })
-          console.log('博北 ' + r)
+          console.log('生活区 ' + r)
         } else {
           r = getDistance(lati, long, 31.766805, 117.183195)
           if (r <= accur) {
