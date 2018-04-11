@@ -10,6 +10,8 @@ Page({
     bindNameShow:'',
     isBinded:false,
     inputFocus:false,
+    inputPlace:'请绑定姓名后使用',
+    buttonShow:'block'
   },
   //事件处理函数
   onLoad: function () {
@@ -17,6 +19,10 @@ Page({
     //判断用户是否已经绑定用户名
     if (getApp().globalData.userInfo!=null) {
       var that = this
+      that.setData({
+        inputPlace: '正在加载用户信息...',
+        buttonShow:'none'
+      })
       getName(that)
     }
     if (app.globalData.userInfo) {
