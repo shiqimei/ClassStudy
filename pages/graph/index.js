@@ -40,24 +40,7 @@ function initChart(canvas, width, height) {
     height: height
   });
   canvas.setChart(chart);
-  var chartData = {
-    day1: [30, 60, 90, 120, 150, 180, 210],
-    day2: [10, 60, 40, 50, 50, 50, 150],
-    day3: [0, 0, 0, 0, 0, 0, 0],
-    day4: [0, 0, 0, 0, 0, 0, 0],
-    day5: [0, 0, 0, 0, 0, 0, 0],
-    day6: [0, 0, 0, 0, 0, 0, 0],
-    day7: [0, 0, 0, 0, 0, 0, 0],
-    sum: {
-      '梅世祺': '40',
-      '刘方祥': '120',
-      '周仁杰': '130',
-      '黄深远': '170',
-      '谢中阳': '200',
-      '彭声旺': '230',
-      '格日勒': '360'
-    }
-  }
+  var chartData = getApp().globalData.chartData
   var names = []
   for (var key in chartData.sum) {
     names.push(key)
