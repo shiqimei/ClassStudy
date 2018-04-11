@@ -22,10 +22,9 @@ page {
 }
 
 .address {
-  opacity: 0.8;
-  border-radius: 2px;
-  box-shadow: 0 0 5px 0.5px rgba(47, 127, 240,0.1);
-  background: rgba(37, 117, 230,0.05);
+  border-radius: 5px;
+  box-shadow: 0 0 5px 0.5px rgba(25, 125, 191,0.1);
+  background: rgba(25, 125, 191,0.05);
   padding: 2px 5px;
   position: absolute;
   top:5px;

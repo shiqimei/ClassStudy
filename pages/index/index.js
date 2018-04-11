@@ -19,6 +19,7 @@ Page({
     animationData:''
   },
   onLoad: function(){
+    var that = this
     if (getApp().globalData.time1 != '') {
       timestart = getApp().globalData.time1 //timestart从缓存中加载时间
       this.setData({
@@ -35,13 +36,13 @@ Page({
       showMessage(that, '请先登录并绑定姓名', 'rgba(226, 88, 80,1)', 1500)
     } else {
       hideResult(that)
+      getGeo(that)
+      var initLoading = wx.showLoading({
+        title: '正在定位中',
+      })
       if (this.data.buttonValue == '开始签到') {
         this.setData({
           stuAddress: '未知区域'
-        })
-        getGeo(that)
-        var initLoading = wx.showLoading({
-          title: '正在定位中',
         })
         setTimeout(function () {
           if (/*that.data.currentLocation == '生活区' ||*/ that.data.currentLocation == '未知区域') {
@@ -61,20 +62,29 @@ Page({
             showMessage(that, '签到成功', '#00c100', 1500)
             wx.hideLoading(initLoading)
           }
-        }, 8000)
+        }, 1000)
       } else {
-        timeend = new Date()
-        console.log('本次自习时间'+(timeend-timestart))
-        wx.setStorageSync('time1', '')  //清空本地时间缓存
-        showMessage(that, '签退成功', '#00c100', 1500)
-        playAudio(musicSuccess)
-        that.setData({
-          buttonValue: '开始签到',
-          buttonBgColor: '#2f7ff0',
-          time2: timeend.format('hh:mm:ss')
-        })
-        showResult(that, dTime(timestart, timeend), 0)
-        wxLogin(dTime2(timestart, timeend))
+        setTimeout(function(){
+          if (/*that.data.currentLocation == '生活区' ||*/ that.data.currentLocation == '未知区域') {
+            playAudio(musicError)
+            showMessage(that, '对不起,非自习区无法签退!', 'rgba(226, 88, 80,1)', 1500)
+            wx.hideLoading(initLoading)
+          } else { //符合签退条件
+            timeend = new Date()
+            console.log('本次自习时间' + (timeend - timestart))
+            wx.setStorageSync('time1', '')  //清空本地时间缓存
+            showMessage(that, '签退成功', '#00c100', 1500)
+            wx.hideLoading(initLoading)
+            playAudio(musicSuccess)
+            that.setData({
+              buttonValue: '开始签到',
+              buttonBgColor: '#2f7ff0',
+              time2: timeend.format('hh:mm:ss')
+            })
+            showResult(that, dTime(timestart, timeend), 0)
+            wxLogin(dTime2(timestart, timeend))
+          }
+        },1000)
       }
     }
   },
@@ -106,11 +116,10 @@ function getGeo(that) {
   var lati, long, r
   wx.getLocation({
     type: 'gcj02',
-    altitude: true,
     success: function (res) {
       lati = res.latitude
       long = res.longitude
-      console.log(res.latitude, res.longitude, res.altitude)
+      console.log(res.latitude, res.longitude)
       r = getDistance(lati, long, 31.770643, 117.18303)
       if (r <= 0.001) {
         that.setData({

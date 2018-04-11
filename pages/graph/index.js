@@ -46,6 +46,7 @@ function initChart(canvas, width, height) {
     names.push(key)
   }
   var option = {
+    animation:false,
     grid: {
       left: '3%',
       right: '4%',

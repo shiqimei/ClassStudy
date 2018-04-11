@@ -42,6 +42,7 @@ if (time1 != '') {
   getApp().globalData.time1 = time1
 }
 
+//从远程拉取图表数据
 setTimeout(function(){
   getApp().globalData.chartData = {
     week:1,
