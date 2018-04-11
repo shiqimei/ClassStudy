@@ -46,7 +46,7 @@ function initChart(canvas, width, height) {
     names.push(key)
   }
   var option = {
-    animation:false,
+    animation: false,
     grid: {
       left: '3%',
       right: '4%',
@@ -61,15 +61,37 @@ function initChart(canvas, width, height) {
         formatter: function (value) {
           return timify(value)
         },
+        margin: 4
       },
       axisLine: {
-        symbol: ['none', 'arrow']
+        symbol: ['none', 'arrow'],
+        symbolSize: ['5', '8'],
+        lineStyle: {
+          color: 'rgba(30, 30, 30,0.8)'
+        }
+      },
+      axisTick: {
+        show: false
+      },
+      splitLine: {
+        show: false
       }
     },
     yAxis: {
       name: '姓名',
       type: 'category',
-      data: names
+      data: names,
+      axisLabel: {
+        margin: 2
+      },
+      axisLine: {
+        lineStyle: {
+          color: 'rgba(30, 30, 30,0.8)'
+        }
+      },
+      axisTick: {
+        show: false
+      },
     },
     series: [
       {
