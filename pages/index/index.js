@@ -16,7 +16,8 @@ Page({
     resultTime: '',
     msgStatus: 'none',
     resultStatus: 'none',
-    animationData: ''
+    messageAnimationData: '',
+    resultAnimationData:''
   },
   onLoad: function () {
     var that = this
@@ -89,7 +90,8 @@ Page({
     }
   },
   tapAnimation: function () {
-    fadeOut(this)
+    fadeOut(this,1)
+    fadeOut(this,2)
   }
 })
 
@@ -234,9 +236,7 @@ function showMessage(that, msg, color, delay) {
   })
   if (delay != 0) {
     setTimeout(function () {
-      that.setData({
-        msgStatus: 'none'
-      })
+      fadeOut(that, 1)
     }, delay)
   }
 }
@@ -299,7 +299,7 @@ function getDate() {
 /**
  * 淡出动画
  */
-function fadeOut(that) {
+function fadeOut(that,index) {
   var animation = wx.createAnimation({
     transformOrigin: "50% 50%",
     duration: 200,
@@ -308,7 +308,13 @@ function fadeOut(that) {
   })
   that.animation = animation
   that.animation.opacity(0).scale(0, 0).step()
-  that.setData({
-    animationData: animation.export()
-  })
+  if(index==1){
+    that.setData({
+      messageAnimationData: animation.export()
+    })
+  } else {
+    that.setData({
+      resultAnimationData: animation.export()
+    })
+  }
 }
