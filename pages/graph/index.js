@@ -9,6 +9,7 @@ Page({
       onInit: initChart
     },
     isLogin: true,
+    week:''
   },
   onLoad:function(){
     that = this
@@ -19,7 +20,8 @@ Page({
       })
     } else {
       this.setData({
-        isLogin: true
+        isLogin: true,
+        week:getApp().globalData.chartData.week
       })
     }
   },
