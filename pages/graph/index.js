@@ -1,15 +1,19 @@
 import * as echarts from '../../ec-canvas/echarts';
 
 let chart = null;
+var that
 
 Page({
   data: {
     ec: {
-      onInit: initChart
+      onInit:initChart
     },
-    isLogin: true
+    isLogin: true,
+    week: 1
   },
   onLoad:function(){
+    that = this
+    //判断是否已经登录
     if (getApp().globalData.userInfo == null) {
       this.setData({
         isLogin:false
@@ -22,7 +26,6 @@ Page({
   },
   onReady() {
     setTimeout(function () {
-      // 获取 chart 实例的方式
       console.log(chart)
     }, 2000);
   }
@@ -37,10 +40,28 @@ function initChart(canvas, width, height) {
     height: height
   });
   canvas.setChart(chart);
-
-  var names = ['梅世祺', '刘方祥', '周仁杰', '黄深远', '谢中阳', '彭声旺', '格日勒']
-  var time1 = [6000, 302, 301, 334, 3950, 330, 320]
-
+  var chartData = {
+    day1: [30, 60, 90, 120, 150, 180, 210],
+    day2: [10, 60, 40, 50, 50, 50, 150],
+    day3: [0, 0, 0, 0, 0, 0, 0],
+    day4: [0, 0, 0, 0, 0, 0, 0],
+    day5: [0, 0, 0, 0, 0, 0, 0],
+    day6: [0, 0, 0, 0, 0, 0, 0],
+    day7: [0, 0, 0, 0, 0, 0, 0],
+    sum: {
+      '梅世祺': '40',
+      '刘方祥': '120',
+      '周仁杰': '130',
+      '黄深远': '170',
+      '谢中阳': '200',
+      '彭声旺': '230',
+      '格日勒': '360'
+    }
+  }
+  var names = []
+  for (var key in chartData.sum) {
+    names.push(key)
+  }
   var option = {
     grid: {
       left: '3%',
@@ -53,16 +74,13 @@ function initChart(canvas, width, height) {
       type: 'value',
       axisLabel: {
         show: true,
-        formatter: function (value, index) {
-          index = index*2
-          if(index<10) {
-            return ('0' + index + ':00')
-          } else {
-            return (index + ':00')
-          }
+        formatter: function (value) {
+          return timify(value)
         },
-        splitNumber: 18
       },
+      axisLine: {
+        symbol: ['none', 'arrow']
+      }
     },
     yAxis: {
       name: '姓名',
@@ -74,25 +92,42 @@ function initChart(canvas, width, height) {
 
         type: 'bar',
         stack: '1',
-        data: [600, 302, 301, 334, 395, 330, 320]
+        data: chartData.day1,
+        barWidth: 45,
       },
       {
 
         type: 'bar',
         stack: '1',
-        data: [500, 132, 101, 134, 90, 230, 210]
+        data: chartData.day2,
+        barWidth: 45,
       },
       {
 
         type: 'bar',
         stack: '1',
-        data: ''
+        data: chartData.day3,
+        barWidth: 45,
       },
       {
 
         type: 'bar',
         stack: '1',
-        data: ''
+        data: chartData.day4,
+        barWidth: 45,
+      },
+      {
+
+        type: 'bar',
+        stack: '1',
+        data: chartData.day5,
+        barWidth: 45,
+      },
+      {
+
+        type: 'bar',
+        stack: '1',
+        data: chartData.day6,
       },
       {
 
@@ -102,21 +137,42 @@ function initChart(canvas, width, height) {
           normal: {
             show: true,
             position: 'right',
-            formatter: function () {
-              return '14:22'
+            formatter: function (object) {
+              return timify(chartData.sum[object.name])
             },
-            textStyle:{
-              fontSize:8,
-              color:'#000',
-              fontWeight:'900'
+            textStyle: {
+              fontSize: 8,
+              color: '#000',
+              fontWeight: '900'
             }
           }
         },
-        data: [50, 132, 101, 134, 90, 230, 210]
+        data: chartData.day7,
       }
     ]
   };
 
   chart.setOption(option);
   return chart;
+}
+
+/**
+ * 时间格式化工具
+ */
+function timify(value) {
+  var hour = Math.floor((value / 60))
+  var min = Math.floor((value % 60))
+  if (hour < 10) {
+    if (min < 10) {
+      return '0' + hour + ':0' + min
+    } else {
+      return '0' + hour + ':' + min
+    }
+  } else {
+    if (min < 10) {
+      return hour + ':0' + min
+    } else {
+      return hour + ':' + min
+    }
+  }
 }

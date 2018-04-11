@@ -45,3 +45,7 @@ ec-canvas {
   background: rgba(226, 88, 80,1);
 }
 
+.week {
+  font-size: 12px;
+ color: rgba(226, 88, 80,0.8) 
+}
