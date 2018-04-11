@@ -139,7 +139,7 @@ function getGeo(that) {
           console.log('生活区 ' + r)
         } else {
           r = getDistance(lati, long, 31.766805, 117.183195)
-          if (r <= accur) {
+          if (r <= 0.0015) {
             that.setData({
               currentLocation: '文典阁',
               addressColor: 'green',
