@@ -6,10 +6,9 @@ var that
 Page({
   data: {
     ec: {
-      onInit:initChart
+      onInit: initChart
     },
     isLogin: true,
-    week: 1
   },
   onLoad:function(){
     that = this
@@ -154,6 +153,7 @@ function initChart(canvas, width, height) {
           }
         },
         data: chartData.day7,
+        barMaxWidth: 30
       }
     ]
   };

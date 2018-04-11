@@ -33,7 +33,7 @@ App({
   globalData: {
     userInfo: null,
     time1:'',
-    chartData:{}
+    chartData:{},
   }
 })
 
@@ -43,24 +43,12 @@ if (time1 != '') {
 }
 
 //从远程拉取图表数据
-setTimeout(function(){
-  getApp().globalData.chartData = {
-    week:1,
-    day1: [30, 60, 90, 120, 150, 180, 210],
-    day2: [10, 60, 40, 50, 50, 50, 150],
-    day3: [0, 0, 0, 0, 0, 0, 0],
-    day4: [0, 0, 0, 0, 0, 0, 0],
-    day5: [0, 0, 0, 0, 0, 0, 0],
-    day6: [0, 0, 0, 0, 0, 0, 0],
-    day7: [0, 0, 0, 0, 0, 0, 0],
-    sum: {
-      '梅世祺': '40',
-      '刘方祥': '120',
-      '周仁杰': '130',
-      '黄深远': '170',
-      '谢中阳': '200',
-      '彭声旺': '230',
-      '格日勒': '360'
-    }
+wx.request({
+  url: 'https://app.lolimay.cn/char.php',
+  header: {
+    'content-type': 'application/json'
+  },
+  success: function (res) {
+    getApp().globalData.chartData = res.data
   }
-},2000)
+})
