@@ -8,30 +8,23 @@ Page({
     ec: {
       lazyLoad: true
     },
-    isLogin: true,
-    week:''
-  },
-  onLoad:function(){
-    that = this
-    //判断是否已经登录
-    if (getApp().globalData.userInfo == null) {
-      this.setData({
-        isLogin:false
-      })
-    } else {
-      this.setData({
-        isLogin: true,
-        week:getApp().globalData.chartData.week
-      })
-    }
+    unloginAlert:'none',
+    isLogin:'none',
+    week:'#'
   },
   onReady() {
     var that = this
     this.ecComponent = this.selectComponent('#mychart-dom-bar');
+    var loading =wx.showLoading({
+      title: '拉取数据中',
+    })
     setTimeout(function () {
       console.log(chart)
       lazyLoad(that)
-    }, 3000);
+    }, 2000);
+    setTimeout(function(){
+      wx.hideLoading(loading)
+    },2700)
   }
 });
 
@@ -199,9 +192,9 @@ function lazyLoad(that) {
 
     that.setData({
       isLoaded: true,
-      isDisposed: false
+      isDisposed: false,
+      week: getApp().globalData.chartData.week
     });
-
     // 注意这里一定要返回 chart 实例，否则会影响事件处理等
     return chart;
   })

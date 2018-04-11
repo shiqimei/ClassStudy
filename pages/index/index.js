@@ -180,7 +180,7 @@ function wxLogin(that,dTime) {
               success: function (res) {
                 console.log(res.data);
                 setTimeout(function(){
-                  showMessage(that, '今日共学习：'+res.data.match(/\d\S+分钟/), '#00c100', 3000)
+                  showMessage(that, '今日共学习：'+res.data.match(/\d\S+分钟/), '#00c100', 5000)
                 },5000)
               }
             })

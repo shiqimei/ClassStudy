@@ -77,8 +77,6 @@ page {
 
 .result {
   color: rgba(253, 100, 0,0.7);
-  box-shadow: 0 0 10px 1px rgba(30, 30, 30,0.04);
-  background:rgba(255, 255, 255,0);
   padding: 5px 2.5%;
   width: 70%;
   margin-top:100rpx;

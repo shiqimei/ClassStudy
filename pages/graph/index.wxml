@@ -1,7 +1,7 @@
 <!--index.wxml-->
 <view class="container">
-  <view wx:if="{{ !isLogin }}" class="notice">请在登录之后使用本功能</view>
-  <view wx:else>
+  <view style="display:{{ unloginAlert }}" class="notice">请在登录之后使用本功能</view>
+  <view style="dispaly:{{ isLogin }}">
     <text class='chartTitle'>17级软工班级自习表</text><text class="week"> 第{{ week }}周</text>
     <ec-canvas id="mychart-dom-bar" canvas-id="mychart-bar" ec="{{ ec }}"></ec-canvas>
   </view>
