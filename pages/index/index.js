@@ -17,9 +17,9 @@ Page({
     msgStatus: 'none',
     resultStatus: 'none',
     messageAnimationData: '',
-    resultAnimationData:''
+    resultAnimationData: ''
   },
-  onShow:function(){//如果签退成功
+  onShow: function () {//如果签退成功
     var that = this
     if (getApp().globalData.isTimeSigned == true) {
       that.setData({
@@ -56,8 +56,8 @@ Page({
         this.setData({
           stuAddress: '未知区域'
         })
-        setTimeout(function () {//调试flag发布时请将下面的注释取消
-          if (/*that.data.currentLocation == '生活区' || that.data.currentLocation == '未知区域'*/false) {
+        setTimeout(function () {
+          if (that.data.currentLocation == '生活区' || that.data.currentLocation == '未知区域') {
             playAudio(musicError)
             showMessage(that, '对不起,非自习区无法签到!', 'rgba(226, 88, 80,1)', 1500)
             wx.hideLoading(initLoading)
@@ -76,8 +76,8 @@ Page({
           }
         }, 1000)
       } else {
-        setTimeout(function () {//调试flag发布时请将下面的注释取消
-          if (/*that.data.currentLocation == '生活区' || that.data.currentLocation == '未知区域'*/false) {
+        setTimeout(function () {
+          if (that.data.currentLocation == '生活区' || that.data.currentLocation == '未知区域') {
             playAudio(musicError)
             showMessage(that, '对不起,非自习区无法签退!', 'rgba(226, 88, 80,1)', 1500)
             wx.hideLoading(initLoading)
@@ -85,16 +85,16 @@ Page({
             timeend = new Date()
             var timeDiff = timeend - timestart
             wx.setStorageSync('time1', '')  //清空本地时间缓存
-            if(timeDiff <= 14400000){//判断自习时间是否异常 //调试flag
+            if (timeDiff >= 18000000) { //超过五个小时即开始检测
               wx.hideLoading(initLoading)
               playAudio(musicError)
               getApp().globalData.wholeTime = timeDiff //将本次自习时间传给全局时间
               showMessage(that, '您本次连续自习超过5小时\n需要您手动确认本次自习时间', 'rgba(226, 88, 80,1)', 3000)
-              setTimeout(function(){
+              setTimeout(function () {
                 wx.navigateTo({
                   url: 'time',
                 })
-              },3000)
+              }, 3000)
             } else {
               showMessage(that, '签退成功', '#00c100', 1500)
               wx.hideLoading(initLoading)
@@ -113,8 +113,8 @@ Page({
     }
   },
   tapAnimation: function () {
-    fadeOut(this,1)
-    fadeOut(this,2)
+    fadeOut(this, 1)
+    fadeOut(this, 2)
   }
 })
 
@@ -138,36 +138,40 @@ function getDistance(x1, y1, x2, y2) {
  * 获取当前位置信息
  */
 function getGeo(that) {
-  var lati, long, r
+  var lati, long
   wx.getLocation({
     type: 'gcj02',
     success: function (res) {
       lati = res.latitude
       long = res.longitude
       console.log(res.latitude, res.longitude)
-      r = getDistance(lati, long, 31.7686843626, 117.1848374605)
-      if (r <= 0.002) {//优先检测博北
+      var r1 = getDistance(lati, long, 31.7696056242, 117.1843171120) //坐标1
+      var r2 = getDistance(lati, long, 31.7695007286, 117.1859371662) //坐标2
+      var r3 = getDistance(lati, long, 31.7715575741, 117.1865594387) //坐标3
+      var r4 = getDistance(lati, long, 31.7683879150, 117.1848964691) //坐标4
+      if ((r1 <= 0.001) || (r2 <= 0.001) || (r3 <= 0.001) || (r4 <= 0.001)) { //优先检测博北
         that.setData({
           currentLocation: '博北',
           addressColor: 'green',
         })
-        console.log('博北 ' + r)
       } else {
-        r = getDistance(lati, long, 31.770643, 117.18303)
-        if (r <= 0.001) {
+        r1 = getDistance(lati, long, 31.766805, 117.183195)
+        if (r1 <= 0.0015) {
           that.setData({
-            currentLocation: '生活区',
-            addressColor: 'rgba(226, 88, 80,1)',
+            currentLocation: '文典阁',
+            addressColor: 'green',
           })
-          console.log('生活区 ' + r)
+          console.log('文典阁 ' + r)
+
         } else {
-          r = getDistance(lati, long, 31.766805, 117.183195)
-          if (r <= 0.0015) {
+          r1 = getDistance(lati, long, 31.770643, 117.18303)
+          r2 = getDistance(lati, long, 31.7712565752, 117.1818870306)
+          if ((r1 <= 0.001) || (r2 <= 0.001)) {
             that.setData({
-              currentLocation: '文典阁',
-              addressColor: 'green',
+              currentLocation: '生活区',
+              addressColor: 'rgba(226, 88, 80,1)',
             })
-            console.log('文典阁 ' + r)
+            console.log('生活区 ' + r)
           } else {
             that.setData({
               currentLocation: '未知区域',
@@ -184,7 +188,7 @@ function getGeo(that) {
 /**
  * 与服务器交互
  */
-function wxLogin(that,dTime) {
+function wxLogin(that, dTime) {
   wx.login({
     success: function (res) {
       var code = res.code;//发送给服务器的code  
@@ -202,9 +206,9 @@ function wxLogin(that,dTime) {
               },
               success: function (res) {
                 console.log(res.data);
-                setTimeout(function(){
-                  showMessage(that, '今日共学习：'+res.data.match(/\d\S+分钟/), '#00c100', 5000)
-                },5000)
+                setTimeout(function () {
+                  showMessage(that, '今日共学习：' + res.data.match(/\d\S+分钟/), '#00c100', 5000)
+                }, 5000)
               }
             })
           }
@@ -318,7 +322,7 @@ function getDate() {
 /**
  * 淡出动画
  */
-function fadeOut(that,index) {
+function fadeOut(that, index) {
   var animation = wx.createAnimation({
     transformOrigin: "50% 50%",
     duration: 200,
@@ -327,7 +331,7 @@ function fadeOut(that,index) {
   })
   that.animation = animation
   that.animation.opacity(0).scale(0, 0).step()
-  if(index==1){
+  if (index == 1) {
     that.setData({
       messageAnimationData: animation.export()
     })
