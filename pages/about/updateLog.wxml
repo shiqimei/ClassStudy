@@ -1,7 +1,7 @@
 <view class="page">
     <text class='header'>版本：1.0.0\n</text>
     <text class='content'>增加自习签到、签退的基本功能\n</text>
-    <text class='content'>增加定时检查当前位置是否在博北、文典阁的功能\n</text>
+    <text class='content'>增加签到、签退检查当前位置是否在博北、文典阁的功能\n</text>
     <text class='content'>增加个人中心\n</text>
     <text class='header'>\n\n版本：1.0.1\n</text>
     <text class='content'>增加图表显示\n</text>
