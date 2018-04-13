@@ -14,17 +14,34 @@ Page({
   },
   onReady() {
     var that = this
-    this.ecComponent = this.selectComponent('#mychart-dom-bar');
+    this.ecComponent = this.selectComponent('#mychart-dom-bar')
     var loading =wx.showLoading({
       title: '拉取数据中',
     })
     setTimeout(function () {
-      console.log(chart)
       lazyLoad(that)
     }, 2000);
     setTimeout(function(){
       wx.hideLoading(loading)
     },2700)
+  },
+  onPullDownRefresh:function(){
+    var that = this
+    this.ecComponent = this.selectComponent('#mychart-dom-bar')
+    //从远程拉取图表数据
+    wx.request({
+      url: 'https://app.lolimay.cn/char.php',
+      header: {
+        'content-type': 'application/json'
+      },
+      success: function (res) {
+        getApp().globalData.chartData = res.data
+        lazyLoad(that)
+        setTimeout(function(){
+          wx.stopPullDownRefresh()
+        },1000)
+      }
+    })
   }
 });
 
