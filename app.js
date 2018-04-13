@@ -34,6 +34,8 @@ App({
     userInfo: null,
     time1:'',
     chartData:{},
+    wholeTime:'',
+    isTimeSigned:false
   }
 })
 

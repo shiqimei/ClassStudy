@@ -1,0 +1,51 @@
+.img {
+  margin-top: 50rpx;
+  text-align: center;
+}
+
+text {
+  font-size: 15px;
+  color: rgba(29, 28, 33,0.8);
+}
+
+.person {
+  color: rgba(47, 127, 240,1);
+}
+
+.please {
+  margin-bottom: 180rpx;
+}
+
+button {
+  color: rgba(30, 30, 30,0.8);
+  font-size: 16px;
+  margin-top:50rpx;
+  width: 80%;
+}
+
+.notice {
+  position: absolute;
+  width: 60%;
+  top:10px;
+  left:17.5%;
+  padding: 5px 2.5%;
+  font-size: 15px;
+  border-radius:7px;
+  box-shadow: 0 0 2px 1px #bdbdbd;
+  color: #fff;
+  letter-spacing: 1px;
+  text-align: center;
+}
+
+.result {
+  position: absolute;
+  bottom: 380rpx;
+  left: 12.5%;
+  color: rgba(253, 100, 0,0.7);
+  padding: 5px 2.5%;
+  width: 70%;
+  font-size: 15px;
+  text-align: center;
+  letter-spacing: 1px;
+  border-radius: 5px;
+}

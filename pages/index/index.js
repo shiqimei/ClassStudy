@@ -19,6 +19,17 @@ Page({
     messageAnimationData: '',
     resultAnimationData:''
   },
+  onShow:function(){//如果签退成功
+    var that = this
+    if (getApp().globalData.isTimeSigned == true) {
+      that.setData({
+        buttonValue: '开始签到',
+        buttonBgColor: '#2f7ff0',
+        time1: '00:00:00',
+        time2: '00:00:00'
+      })
+    }
+  },
   onLoad: function () {
     var that = this
     if (getApp().globalData.time1 != '') {
@@ -72,18 +83,30 @@ Page({
             wx.hideLoading(initLoading)
           } else { //符合签退条件
             timeend = new Date()
-            console.log('本次自习时间' + (timeend - timestart))
+            var timeDiff = timeend - timestart
             wx.setStorageSync('time1', '')  //清空本地时间缓存
-            showMessage(that, '签退成功', '#00c100', 1500)
-            wx.hideLoading(initLoading)
-            playAudio(musicSuccess)
-            that.setData({
-              buttonValue: '开始签到',
-              buttonBgColor: '#2f7ff0',
-              time2: timeend.format('hh:mm:ss')
-            })
-            showResult(that, dTime(timestart, timeend), 0)
-            wxLogin(that,dTime2(timestart, timeend))
+            if(timeDiff <= 14400000){//判断自习时间是否异常 //调试flag
+              wx.hideLoading(initLoading)
+              playAudio(musicError)
+              getApp().globalData.wholeTime = timeDiff //将本次自习时间传给全局时间
+              showMessage(that, '您本次连续自习超过5小时\n需要您手动确认本次自习时间', 'rgba(226, 88, 80,1)', 3000)
+              setTimeout(function(){
+                wx.navigateTo({
+                  url: 'time',
+                })
+              },3000)
+            } else {
+              showMessage(that, '签退成功', '#00c100', 1500)
+              wx.hideLoading(initLoading)
+              playAudio(musicSuccess)
+              that.setData({
+                buttonValue: '开始签到',
+                buttonBgColor: '#2f7ff0',
+                time2: timeend.format('hh:mm:ss')
+              })
+              showResult(that, dTime(timestart, timeend), 0)
+              wxLogin(that, dTime2(timestart, timeend))
+            }
           }
         }, 1000)
       }

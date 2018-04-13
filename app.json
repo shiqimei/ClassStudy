@@ -5,7 +5,8 @@
     "pages/about/index",
     "pages/about/updateLog",
     "pages/logs/logs",
-    "pages/about/geoTest"
+    "pages/about/geoTest",
+    "pages/index/time"
   ],
   "window": {
     "backgroundTextStyle": "light",
