@@ -4,7 +4,8 @@
     "pages/graph/index",
     "pages/about/index",
     "pages/about/updateLog",
-    "pages/logs/logs"
+    "pages/logs/logs",
+    "pages/about/geoTest"
   ],
   "window": {
     "backgroundTextStyle": "light",

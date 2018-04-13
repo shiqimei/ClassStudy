@@ -83,9 +83,6 @@ Page({
       url: 'updateLog'
     })
   },
-  updateIt: {
-
-  },
   inputChange: function(e){
     inputValue = e.detail.value
   },
@@ -113,6 +110,11 @@ Page({
   },
   bugTo:function(){
     this.bugToDialog.showDialog();
+  },
+  geoTest:function(){
+    wx.navigateTo({
+      url: 'geoTest',
+    })
   }
 })
 
