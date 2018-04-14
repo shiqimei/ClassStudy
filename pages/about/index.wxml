@@ -15,6 +15,7 @@
       </view>
     </block>
   </view>
+  <view class="list" bindtap="questions">常见问题</view>
   <view class="list" bindtap="updateLog">更新记录</view>
   <view class="list" bindtap="versionInfo">版本信息</view>
   <view class="list" bindtap="aboutUs">关于我们</view>

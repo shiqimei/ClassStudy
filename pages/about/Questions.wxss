@@ -1,0 +1,15 @@
+page {
+    background: url('http://p40kjburh.bkt.clouddn.com/18-4-10/59467875.jpg');
+}
+
+.container {
+  color: #818181;
+  font-size: 15px;
+  padding: 50rpx;
+  text-align: left;
+}
+
+.qa {
+  width: 100%;
+  margin-bottom: 25px;
+}

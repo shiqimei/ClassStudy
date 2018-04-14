@@ -115,6 +115,11 @@ Page({
     wx.navigateTo({
       url: 'geoTest',
     })
+  },
+  questions: function(){
+    wx.navigateTo({
+      url: 'Questions',
+    })
   }
 })
 

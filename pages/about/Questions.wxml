@@ -1,0 +1,22 @@
+<view class='container'>
+  <view class='qa'>
+    <view>Q1：我不是安徽大学17级软件工程的学生可以使用该小程序吗?</view>
+    <view>A1：抱歉，该工具仅供我们班级内部用于自习签到、签退使用。</view>
+  </view>
+  <view class='qa'>
+    <view>Q2：为什么图表显示不出来?</view>
+    <view>A2：可能是你的网络太差，没能及时拉取到数据，可以在图表页下拉刷新，重新加载图表。</view>
+  </view>
+  <view class='qa'>
+    <view>Q3：为什么我刚结束签到,自习的时间没在图表上更新?</view>
+    <view>A3：图表采用预加载，只在小程序启动时从服务器拉取数据。如果需要更新图表，可以在图表页下拉刷新，重新加载图表。</view>
+  </view>
+  <view class='qa'>
+    <view>Q4：刚开始登录绑定的是什么名字?</view>
+    <view>A4：绑定的是你的真实姓名，如果数据库中没有对应的名字，则会自动忽略你的本次绑定。</view>
+  </view>
+    <view class='qa'>
+    <view>Q4：我好像发现了你们软件的Bug...</view>
+    <view>A4：那就QQ私戳我或者刘方祥...</view>
+  </view>
+</view>
