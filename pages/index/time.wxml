@@ -6,7 +6,7 @@
     <view><text class='person'>大佬：</text><text>不...你想多了，我也许只是忘记了签退!</text></view>
   </view>
   <text class="result" style="display:{{ resultStatus }}" bindtap='tapAnimation' animation="{{ resultAnimationData }}">本次自习{{ resultTime }}，继续加油!</text>
-  <picker class="weui-btn" mode="time" value="{{ time }}" start="05:00" end="{{ endTime }}" bindchange="bindTimeChange">
+  <picker class="weui-btn" mode="time" value="{{ time }}" start="00:00" end="{{ endTime }}" bindchange="bindTimeChange">
         <button type="default">修改本次自习时间</button>
   </picker>
   <button style='opacity:{{ buttonOpacity }}' bindtap='confirmTime'>结束本次自习</button>
