@@ -173,6 +173,7 @@ function setOption(chart) {
           normal: {
             show: true,
             position: 'right',
+            offset: [-4, 0],
             formatter: function (object) {
               return timify(chartData.sum[object.name])
             },
