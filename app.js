@@ -44,13 +44,17 @@ if (time1 != '') {
   getApp().globalData.time1 = time1
 }
 
-//从远程拉取图表数据
-wx.request({
-  url: 'https://app.lolimay.cn/char.php',
-  header: {
-    'content-type': 'application/json'
-  },
-  success: function (res) {
-    getApp().globalData.chartData = res.data
-  }
-})
+//尝试从远程拉取图表数据
+try{
+  wx.request({
+    url: 'https://app.lolimay.cn/char.php',
+    header: {
+      'content-type': 'application/json'
+    },
+    success: function (res) {
+      getApp().globalData.chartData = res.data
+    }
+  })
+} catch(ex) {
+  
+}

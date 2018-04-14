@@ -161,7 +161,7 @@ function getGeo(that) {
             currentLocation: '文典阁',
             addressColor: 'green',
           })
-          console.log('文典阁 ' + r)
+          console.log('文典阁 ')
 
         } else {
           r1 = getDistance(lati, long, 31.770643, 117.18303)
@@ -171,13 +171,13 @@ function getGeo(that) {
               currentLocation: '生活区',
               addressColor: 'rgba(226, 88, 80,1)',
             })
-            console.log('生活区 ' + r)
+            console.log('生活区 ')
           } else {
             that.setData({
               currentLocation: '未知区域',
               addressColor: 'rgba(226, 88, 80,1)',
             })
-            console.log('未知区域 ' + r)
+            console.log('未知区域 ')
           }
         }
       }
