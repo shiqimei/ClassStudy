@@ -15,7 +15,6 @@ page {
 }
 
 .title {
-  text-shadow: 2px 2px 4px rgba(30, 30, 30,0.5); 
   font-size: 18px;
   color:rgba(226, 88, 80,1);
   margin-bottom: 10px;
