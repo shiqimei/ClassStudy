@@ -21,6 +21,7 @@
   <view class="list" bindtap="aboutUs">关于我们</view>
   <view class="list" bindtap="bugTo">反馈BUG</view>
   <view class="list" bindtap="geoTest">位置测试</view>
+   <view class="list" bindtap="clearCache">清除缓存</view>
   <dialog 
     id='dialog'
     title='安徽大学17级软件工程班级自习自助签到系统'

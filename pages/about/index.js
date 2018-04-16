@@ -120,6 +120,14 @@ Page({
     wx.navigateTo({
       url: 'Questions',
     })
+  },
+  clearCache:function(){
+    getApp().globalData.userInfo = null
+    setTimeout(function(){
+      wx.reLaunch({
+        url: 'index',
+      })
+    },1000)
   }
 })
 
