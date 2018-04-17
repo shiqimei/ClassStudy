@@ -8,4 +8,6 @@
     <text class='header'>\n\n版本：1.0.2\n</text>
     <text class='content'>完善常见问题页\n</text>
     <text class='content'>增减清除缓存按钮\n</text>
+    <text class='header'>\n\n版本：1.0.3\n</text>
+    <text class='content'>紧急修复忘记签退不能手动将自习时间调至5小时一下的Bug\n</text>
 </view>
