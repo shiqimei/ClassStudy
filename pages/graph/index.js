@@ -76,7 +76,6 @@ function setOption(chart) {
     names.push(key)
   }
   var option = {
-    animation: false,
     grid: {
       left: '3%',
       right: '4%',

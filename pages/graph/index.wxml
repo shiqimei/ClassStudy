@@ -1,8 +1,8 @@
 <!--index.wxml-->
 <view class="container">
-  <view style="display:{{ unloginAlert }}" class="notice">请在登录之后使用本功能</view>
-  <view style="dispaly:{{ isLogin }}">
-    <text class='chartTitle'>17级软工班级自习表</text><text class="week"> 第{{ week }}周</text>
+    <view>
+    <text class='chartTitle'>　　17级软工班级自习表</text><text class="week"> 第{{ week }}周</text>
+    <view><image src='/images/demo.png' class="demo"></image></view>
+    </view>
     <ec-canvas id="mychart-dom-bar" canvas-id="mychart-bar" ec="{{ ec }}"></ec-canvas>
-  </view>
 </view>

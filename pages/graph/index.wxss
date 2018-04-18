@@ -49,3 +49,8 @@ ec-canvas {
   font-size: 12px;
  color: rgba(226, 88, 80,0.8) 
 }
+
+.demo {
+  height: 20rpx;
+  width: 400rpx;
+}
