@@ -81,7 +81,7 @@ function setOption(chart) {
       left: '3%',
       right: '4%',
       bottom: '3%',
-      containLabel: true
+      containLabel:true
     },
     xAxis: {
       name: '时间',
@@ -111,8 +111,12 @@ function setOption(chart) {
       name: '姓名',
       type: 'category',
       data: names,
+      max: 55,
+      containLabel:true,
       axisLabel: {
-        margin: 2
+        margin: 2,
+        fontSize:10,
+        fontClolr:'rgba(30, 30, 30,1)'
       },
       axisLine: {
         lineStyle: {
@@ -122,6 +126,8 @@ function setOption(chart) {
       axisTick: {
         show: false
       },
+      margin:40,
+      boundaryGap: true
     },
     series: [
       {
@@ -129,35 +135,30 @@ function setOption(chart) {
         type: 'bar',
         stack: '1',
         data: chartData.day1,
-        barWidth: 45,
       },
       {
 
         type: 'bar',
         stack: '1',
         data: chartData.day2,
-        barWidth: 45,
       },
       {
 
         type: 'bar',
         stack: '1',
         data: chartData.day3,
-        barWidth: 45,
       },
       {
 
         type: 'bar',
         stack: '1',
         data: chartData.day4,
-        barWidth: 45,
       },
       {
 
         type: 'bar',
         stack: '1',
         data: chartData.day5,
-        barWidth: 45,
       },
       {
 
