@@ -70,7 +70,7 @@ Page({
   },
   versionInfo: function () {
     wx.showActionSheet({
-      itemList: ['当前版本：1.1.0'],
+      itemList: ['当前版本：1.2.0'],
       success: function (res) {
         if (!res.cancel) {
           console.log(res.tapIndex)

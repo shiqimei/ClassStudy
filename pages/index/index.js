@@ -32,6 +32,9 @@ Page({
   },
   onLoad: function () {
     var that = this
+    wx.redirectTo({
+      url: '/pages/others/welcome',
+    })
     if (getApp().globalData.time1 != '') {
       timestart = getApp().globalData.time1 //timestart从缓存中加载时间
       this.setData({

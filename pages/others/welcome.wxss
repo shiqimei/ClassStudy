@@ -1,0 +1,34 @@
+/* pages/others/welcome.wxss */
+@import "../../components/hSwiper/hSwiper.wxss";
+
+/*滚动图*/
+#mainContainer{
+  margin: 0;
+  padding: 0;
+	height: 560px;
+	width: 100%;
+}
+
+.itemSelf{
+	height: 560px;
+	position: absolute;
+	box-sizing:border-box;
+	overflow: hidden;
+	width: 100%;
+	color: white;
+}
+
+.container {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+}
+
+image {
+  position: absolute;
+  width: 100%;
+  height: 575px;
+}
+
+

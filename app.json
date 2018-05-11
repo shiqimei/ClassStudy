@@ -7,7 +7,8 @@
     "pages/logs/logs",
     "pages/about/geoTest",
     "pages/index/time",
-    "pages/about/Questions"
+    "pages/about/Questions",
+    "pages/others/welcome"
   ],
   "window": {
     "backgroundTextStyle": "light",
