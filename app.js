@@ -1,5 +1,9 @@
 App({
   onLaunch: function () {
+    //跳转至引导页
+    wx.reLaunch({
+      url: '/pages/others/welcome',
+    })
     // 展示本地存储能力
     var logs = wx.getStorageSync('logs') || []
     logs.unshift(Date.now())
