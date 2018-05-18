@@ -1,9 +1,19 @@
 <template name="hSwiperItem">
-	<view class="itemSelf">
-    	<image src='{{ item }}'></image>
-	</view>	
-</template>
-
-<template name="templateb">
-	{{item}}
+	<view class="itemSelf type1" wx:if="{{ item[0] === 1 }}">
+      <image src='{{ item[1] }}'></image>
+	</view>
+  <view class="type2" wx:else>
+    <image class="prompt" src="http://p40kjburh.bkt.clouddn.com/18-5-14/20683062.jpg"></image>
+    <image class="logo" src="http://p40kjburh.bkt.clouddn.com/18-5-13/28370152.jpg"></image>
+    <view class="panel">
+      <text class="title">最后一步</text>
+      <view class="weui-cell__bd">1.开启定位权限</view>
+      <button class="picker" bindtap="goSetting">点击设置</button>
+      <view class="weui-cell__bd">2.选择您的班级</view>
+      <picker bindchange="bindPickerChange" range="{{item[2]}}">
+        <button type="default" class="picker">选择班级</button>
+      </picker>
+    </view>
+    <view class="button" bindtap="experienceIt">立即体验</view>
+  </view>
 </template>

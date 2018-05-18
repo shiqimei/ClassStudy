@@ -108,7 +108,8 @@ function wxLogin(that, dTime) {
               url: 'https://app.lolimay.cn/qd.php',
               data: {
                 code: code,
-                ljsj: dTime
+                ljsj: dTime,
+                stuclass: getApp().globalData.stuclass
               },
               header: {
                 'content-type': 'application/json'

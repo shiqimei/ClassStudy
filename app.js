@@ -1,9 +1,11 @@
 App({
   onLaunch: function () {
-    //跳转至引导页
-    wx.reLaunch({
-      url: '/pages/others/welcome',
-    })
+    if (wx.getStorageSync('firstTime') !== false) {
+      //跳转至引导页
+      wx.reLaunch({
+        url: '/pages/others/welcome',
+      })
+    }
     // 展示本地存储能力
     var logs = wx.getStorageSync('logs') || []
     logs.unshift(Date.now())
@@ -39,11 +41,17 @@ App({
     time1:'',
     chartData:{},
     wholeTime:'',
-    isTimeSigned:false
+    isTimeSigned:false,
+    stuclass:null
   }
 })
 
-var time1 = wx.getStorageSync('time1')
+//从缓存中加载信息
+var stuclass = wx.getStorageSync('stuclass') //加载班级信息
+if (stuclass !== null) {
+  getApp().globalData.stuclass = stuclass
+}
+var time1 = wx.getStorageSync('time1') //加载开始签到时间
 if (time1 != '') {
   getApp().globalData.time1 = time1
 }

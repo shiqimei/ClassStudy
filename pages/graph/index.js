@@ -10,20 +10,39 @@ Page({
     },
     unloginAlert:'none',
     isLogin:'none',
-    week:'#'
+    week:'#',
+    hasClassInfo:false,
+    classInfo:''
+  },
+  onLoad() {
+    console.log(getApp().globalData.stuclass)
+    if (typeof getApp().globalData.stuclass === 'string') {
+      var info
+      if (getApp().globalData.stuclass === '0') {
+        info = '17级软件工程'
+      } else {
+        info =  '17级地质学'
+      }
+      this.setData({
+        hasClassInfo:true,
+        classInfo: info
+      })
+    }
   },
   onReady() {
     var that = this
-    this.ecComponent = this.selectComponent('#mychart-dom-bar')
-    var loading =wx.showLoading({
-      title: '拉取数据中',
-    })
-    setTimeout(function () {
-      lazyLoad(that)
-    }, 2000);
-    setTimeout(function(){
-      wx.hideLoading(loading)
-    },2700)
+    if(that.data.hasClassInfo === true) {
+      this.ecComponent = this.selectComponent('#mychart-dom-bar')
+      var loading = wx.showLoading({
+        title: '拉取数据中',
+      })
+      setTimeout(function () {
+        lazyLoad(that)
+      }, 2000);
+      setTimeout(function () {
+        wx.hideLoading(loading)
+      }, 2700)
+    }
   },
   onPullDownRefresh:function(){
     var that = this

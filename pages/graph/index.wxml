@@ -1,8 +1,12 @@
 <!--index.wxml-->
-<view class="container">
+<view class="container" wx:if="{{ hasClassInfo }}">
     <view>
-    <text class='chartTitle'>　　17级软工班级自习表</text><text class="week"> 第{{ week }}周</text>
+    <text class='chartTitle'>　　{{ classInfo}}班级自习表</text><text class="week"> 第{{ week }}周</text>
     <view><image src='/images/demo.png' class="demo"></image></view>
     </view>
     <ec-canvas id="mychart-dom-bar" canvas-id="mychart-bar" ec="{{ ec }}"></ec-canvas>
+</view>
+
+<view class="container" wx:else>
+    <text>请选择您所在的班级后再使用本功能!</text>
 </view>

@@ -190,6 +190,55 @@ class hSwiper {
         self.moveViewTo(self.getNowView());
       }
     };
+
+    // 11开启定位权限按钮
+    this.pageCtx['goSetting'] = function (e) {
+      wx.getSetting({
+        success: (res) => {
+          if (!res.authSetting['scope.userLocation'] === true) {
+            wx.getLocation({
+              type: 'wgs84'
+            })
+          } else {
+            wx.openSetting({
+
+            })
+          }
+        }
+      })
+    };
+    
+    // 22立即体验按钮点击事件
+    this.pageCtx['experienceIt'] = function (e) {
+      wx.getSetting({
+        success: (res) => {
+          if (!res.authSetting['scope.userLocation'] === true) {
+            wx.showActionSheet({
+              itemList: ['请先授权位置信息'],
+            })
+          } else if (typeof wx.getStorageSync('stuclass') !== 'string') {
+            getApp().globalData.stuclass = wx.getStorageSync('stuclass') //获取当前班级
+            wx.showActionSheet({
+              itemList: ['请选择您的班级'],
+            })
+          } else {
+            wx.setStorageSync('firstTime', false)
+            var stuclass = wx.getStorageSync('stuclass') //加载班级信息
+            if (stuclass !== null) {
+              getApp().globalData.stuclass = stuclass
+            }
+            wx.reLaunch({
+              url: '/pages/index/index',
+            })
+          }
+        }
+      })
+    }
+
+    // 33 picker
+    this.pageCtx['bindPickerChange'] = function (e) {
+      wx.setStorageSync('stuclass', e.detail.value)
+    }
   }
 
   // 初始化数据

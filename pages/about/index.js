@@ -123,6 +123,8 @@ Page({
   },
   clearCache:function(){
     getApp().globalData.userInfo = null
+    wx.setStorageSync('stuclass', null)
+    wx.setStorageSync('firstTime', null)
     setTimeout(function(){
       wx.reLaunch({
         url: 'index',
