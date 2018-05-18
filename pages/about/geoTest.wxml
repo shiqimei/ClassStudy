@@ -1,5 +1,0 @@
-<!--pages/about/geoTest.wxml-->
-<input type='text' value="{{ lowValue }}"></input>
-<button bindtap="buttonLow">低精度测试</button>
-<input type='text' value="{{ highValue }}"></input>
-<button bindtap="buttonHigh">高精度测试</button>

@@ -17,21 +17,13 @@
   </view>
   <view class="list" bindtap="questions">入门手册</view>
   <view class="list" bindtap="updateLog">更新记录</view>
-  <view class="list" bindtap="bugTo">反馈BUG</view>
-  <view class="list" bindtap="geoTest">位置测试</view>
   <view class="list" bindtap="clearCache">清除缓存</view>
   <view class="list" bindtap="versionInfo">版本信息</view>
-  <view class="list" bindtap="aboutUs">关于我们</view>
+  <view class="list" bindtap="aboutUs">关于&反馈</view>
   <dialog 
     id='dialog'
-    title='安徽大学17级软件工程班级自习自助签到系统'
-    content='\nLoliMay（前端）\nWatermelon（后台）'
-    bind:confirmEvent="_confirmEvent">
-  </dialog>
-  <dialog 
-    id='bugToDialog'
-    title='请将你所知道的BUG反馈至\n'
-    content='1404363070@qq.com'
+    title='自习自助签到系统'
+    content='　　　LoliMay（前端）QQ1404363070　　　　Watermelon（后台）QQ292286717'
     bind:confirmEvent="_confirmEvent">
   </dialog>
 </view>

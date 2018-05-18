@@ -1,8 +1,0 @@
-/* pages/about/geoTest.wxss */
-page {
-    background: url('http://p40kjburh.bkt.clouddn.com/18-4-10/59467875.jpg');
-}
-
-input {
-  text-align: center;
-}

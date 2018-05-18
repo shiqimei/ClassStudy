@@ -70,7 +70,7 @@ Page({
   },
   versionInfo: function () {
     wx.showActionSheet({
-      itemList: ['当前版本：1.2.0'],
+      itemList: ['当前版本：1.3.0'],
       success: function (res) {
         if (!res.cancel) {
           console.log(res.tapIndex)
@@ -108,28 +108,32 @@ Page({
   aboutUs:function() {
     this.dialog.showDialog();   
   },
-  bugTo:function(){
-    this.bugToDialog.showDialog();
-  },
-  geoTest:function(){
-    wx.navigateTo({
-      url: 'geoTest',
-    })
-  },
   questions: function(){
     wx.navigateTo({
       url: 'Questions',
     })
   },
-  clearCache:function(){
-    getApp().globalData.userInfo = null
-    wx.setStorageSync('stuclass', null)
-    wx.setStorageSync('firstTime', null)
-    setTimeout(function(){
-      wx.reLaunch({
-        url: 'index',
-      })
-    },1000)
+  clearCache:function(){//清除缓存
+    wx.showModal({
+      title: '警告',
+      content: '在确认前请确信你很清楚你正在做什么！！！清除缓存意味着你将丢失你的班级信息、登录信息以及其它重要数据。',
+      confirmColor:'#61e402',
+      cancelColor:'red',
+      confirmText:'返回',
+      cancelText:'确认',
+      success: function (res) {
+        if(!res.confirm) {
+          getApp().globalData.userInfo = null
+          wx.setStorageSync('stuclass', null)
+          wx.setStorageSync('firstTime', null)
+          setTimeout(function () {
+            wx.reLaunch({
+              url: 'index',
+            })
+          }, 1000)
+        }
+      }
+    })
   }
 })
 
