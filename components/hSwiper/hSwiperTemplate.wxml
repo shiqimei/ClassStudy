@@ -3,7 +3,7 @@
       <image src='{{ item[1] }}'></image>
 	</view>
   <view class="type2" wx:else>
-    <image class="prompt" src="http://p40kjburh.bkt.clouddn.com/18-5-14/20683062.jpg"></image>
+    <image class="prompt" src="http://p40kjburh.bkt.clouddn.com/18-5-19/52813119.jpg"></image>
     <image class="logo" src="http://p40kjburh.bkt.clouddn.com/18-5-13/28370152.jpg"></image>
     <view class="panel">
       <text class="title">最后一步</text>

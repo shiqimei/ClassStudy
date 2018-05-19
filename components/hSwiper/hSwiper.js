@@ -213,11 +213,20 @@ class hSwiper {
       wx.getSetting({
         success: (res) => {
           if (!res.authSetting['scope.userLocation'] === true) {
+            var audio = wx.createInnerAudioContext()
+            audio.src = 'http://p4yx52bfi.bkt.clouddn.com/error.mp3'
+            audio.play()
+            wx.showActionSheet({
+              itemList: ['请选择您的班级'],
+            })
             wx.showActionSheet({
               itemList: ['请先授权位置信息'],
             })
           } else if (typeof wx.getStorageSync('stuclass') !== 'string') {
             getApp().globalData.stuclass = wx.getStorageSync('stuclass') //获取当前班级
+            var audio = wx.createInnerAudioContext()
+            audio.src = 'http://p4yx52bfi.bkt.clouddn.com/error.mp3'
+            audio.play()
             wx.showActionSheet({
               itemList: ['请选择您的班级'],
             })
