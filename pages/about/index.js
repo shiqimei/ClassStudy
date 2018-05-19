@@ -11,7 +11,8 @@ Page({
     isBinded:false,
     inputFocus:false,
     inputPlace:'请绑定姓名后使用',
-    buttonShow:'block'
+    buttonShow:'block',
+    stuName:'加载中'
   },
   //事件处理函数
   onLoad: function () {
@@ -128,7 +129,7 @@ Page({
           wx.setStorageSync('firstTime', null)
           setTimeout(function () {
             wx.reLaunch({
-              url: 'index',
+              url: '/pages/others/welcome',
             })
           }, 1000)
         }
@@ -151,7 +152,7 @@ function wxLogin(that) {
           var gender = res.userInfo.gender;//用户性别
           if (code) {
             wx.request({
-              url: 'https://app.lolimay.cn/qd.php',
+              url: 'https://app.lolimay.cn/test/qd.php',
               data: {
                 name: inputValue,
                 code: code,
@@ -163,7 +164,7 @@ function wxLogin(that) {
                 'content-type': 'application/json'
               },
               success: function (res) {
-                console.log(res.data);
+                //do nothing
               }
             })
           }
@@ -193,12 +194,15 @@ function getName(that) {
               url: 'https://app.lolimay.cn/name.php',
               data: {
                 code: code,
+                stuclass: getApp().globalData.stuclass
               },
               header: {
                 'content-type': 'application/json'
               },
               success: function (res) {
-                console.log(res.data)
+                that.setData({
+                  stuName:res.data
+                })
                 getApp().globalData.userName = res.data
                 if (res.data != '') {
                   that.setData({

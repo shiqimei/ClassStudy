@@ -26,6 +26,7 @@ Page({
     var that = this
     var pickerTime
     cnt = 0
+    showMessage(that, '您本次连续自习超过5小时\n需要您手动确认本次自习时间', 'rgba(226, 88, 80,1)', 3000)
     getApp().globalData.isTimeSigned = false //默认关闭签退成功FLAG
     var num = Math.floor(Math.random() * 2 + 1) //生成随机图片
     var theHour = Math.floor(getApp().globalData.wholeTime / 3600000) //本次自习小时数
@@ -105,7 +106,7 @@ function wxLogin(that, dTime) {
         success: function (res) {
           if (code) {
             wx.request({
-              url: 'https://app.lolimay.cn/qd.php',
+              url: 'https://app.lolimay.cn/test/qd.php',
               data: {
                 code: code,
                 ljsj: dTime,

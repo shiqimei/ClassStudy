@@ -49,9 +49,12 @@ Page({
     this.ecComponent = this.selectComponent('#mychart-dom-bar')
     //从远程拉取图表数据
     wx.request({
-      url: 'https://app.lolimay.cn/char.php',
+      url: 'https://app.lolimay.cn/test/char.php',
       header: {
         'content-type': 'application/json'
+      },
+      data: {
+        stuclass: getApp().globalData.stuclass
       },
       success: function (res) {
         getApp().globalData.chartData = res.data

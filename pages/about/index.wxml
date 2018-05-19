@@ -7,7 +7,7 @@
     <block wx:else>
       <view wx:if="{{ isBinded }}">
         <image class="userinfo-avatar" src="{{userInfo.avatarUrl}}" background-size="cover"></image>
-        <text class="userinfo-nickname">{{userInfo.nickName}}</text>
+        <text class="userinfo-nickname">{{ stuName }}</text>
       </view>
       <view wx:else style="display:{{ bindNameShow }}">
         <input type='text' placeholder="{{ inputPlace }}" class='nameinput' bindinput='inputChange' auto-focus="{{ inputFocus }}"></input>

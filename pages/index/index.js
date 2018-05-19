@@ -2,6 +2,7 @@ const musicSuccess = 'http://p4yx52bfi.bkt.clouddn.com/success.mp3'
 const musicError = 'http://p4yx52bfi.bkt.clouddn.com/error.mp3'
 var timestart, timeend, timer1
 var ToDay = getDate()
+var canTouchButton = true
 
 Page({
   data: {
@@ -46,7 +47,9 @@ Page({
     if (getApp().globalData.userInfo == null) {
       playAudio(musicError)
       showMessage(that, '请先登录并绑定姓名', 'rgba(226, 88, 80,1)', 1500)
-    } else {
+    } else if (canTouchButton) {
+      canTouchButton = false //禁止多次点击
+      setTimeout(() => { canTouchButton=true }, 4000) //4秒后恢复
       hideResult(that)
       getGeo(that)
       var initLoading = wx.showLoading({
@@ -57,7 +60,7 @@ Page({
           stuAddress: '未知区域'
         })
         setTimeout(function () {
-          if (that.data.currentLocation == '生活区' || that.data.currentLocation == '未知区域') {
+          if (that.data.currentLocation == '生活' || that.data.currentLocation == '未知区域') {
             playAudio(musicError)
             showMessage(that, '对不起,非自习区无法签到!', 'rgba(226, 88, 80,1)', 1500)
             wx.hideLoading(initLoading)
@@ -74,10 +77,10 @@ Page({
             showMessage(that, '签到成功', '#00c100', 1500)
             wx.hideLoading(initLoading)
           }
-        }, 1000)
+        }, 3000)
       } else {
         setTimeout(function () {
-          if (that.data.currentLocation == '生活区' || that.data.currentLocation == '未知区域') {
+          if (that.data.currentLocation == '生活' || that.data.currentLocation == '未知区域') {
             playAudio(musicError)
             showMessage(that, '对不起,非自习区无法签退!', 'rgba(226, 88, 80,1)', 1500)
             wx.hideLoading(initLoading)
@@ -85,16 +88,13 @@ Page({
             timeend = new Date()
             var timeDiff = timeend - timestart
             wx.setStorageSync('time1', '')  //清空本地时间缓存
-            if (timeDiff >= 18000000) { //超过五个小时即开始检测
+            if (timeDiff <= 18000000) { //超过五个小时即开始检测
               wx.hideLoading(initLoading)
               playAudio(musicError)
               getApp().globalData.wholeTime = timeDiff //将本次自习时间传给全局时间
-              showMessage(that, '您本次连续自习超过5小时\n需要您手动确认本次自习时间', 'rgba(226, 88, 80,1)', 3000)
-              setTimeout(function () {
-                wx.navigateTo({
-                  url: 'time',
-                })
-              }, 3000)
+              wx.navigateTo({
+                url: 'time',
+              })
             } else {
               showMessage(that, '签退成功', '#00c100', 1500)
               wx.hideLoading(initLoading)
@@ -108,7 +108,7 @@ Page({
               wxLogin(that, dTime2(timestart, timeend))
             }
           }
-        }, 1000)
+        }, 3000)
       }
     }
   },
@@ -196,7 +196,7 @@ function wxLogin(that, dTime) {
         success: function (res) {
           if (code) {
             wx.request({
-              url: 'https://app.lolimay.cn/qd.php',
+              url: 'https://app.lolimay.cn/test/qd.php',
               data: {
                 code: code,
                 ljsj: dTime,
