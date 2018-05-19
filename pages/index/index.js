@@ -49,7 +49,7 @@ Page({
       showMessage(that, '请先登录并绑定姓名', 'rgba(226, 88, 80,1)', 1500)
     } else if (canTouchButton) {
       canTouchButton = false //禁止多次点击
-      setTimeout(() => { canTouchButton=true }, 4000) //4秒后恢复
+      setTimeout(() => { canTouchButton=true }, 5000) //5秒后恢复
       hideResult(that)
       getGeo(that)
       var initLoading = wx.showLoading({
@@ -60,7 +60,7 @@ Page({
           stuAddress: '未知区域'
         })
         setTimeout(function () {
-          if (that.data.currentLocation == '生活' || that.data.currentLocation == '未知区域') {
+          if (that.data.currentLocation == '生活区' || that.data.currentLocation == '未知区域') {
             playAudio(musicError)
             showMessage(that, '对不起,非自习区无法签到!', 'rgba(226, 88, 80,1)', 1500)
             wx.hideLoading(initLoading)
@@ -80,7 +80,7 @@ Page({
         }, 3000)
       } else {
         setTimeout(function () {
-          if (that.data.currentLocation == '生活' || that.data.currentLocation == '未知区域') {
+          if (that.data.currentLocation == '生活区' || that.data.currentLocation == '未知区域') {
             playAudio(musicError)
             showMessage(that, '对不起,非自习区无法签退!', 'rgba(226, 88, 80,1)', 1500)
             wx.hideLoading(initLoading)
@@ -88,7 +88,7 @@ Page({
             timeend = new Date()
             var timeDiff = timeend - timestart
             wx.setStorageSync('time1', '')  //清空本地时间缓存
-            if (timeDiff <= 18000000) { //超过五个小时即开始检测
+            if (timeDiff >= 18000000) { //超过五个小时即开始检测
               wx.hideLoading(initLoading)
               playAudio(musicError)
               getApp().globalData.wholeTime = timeDiff //将本次自习时间传给全局时间
