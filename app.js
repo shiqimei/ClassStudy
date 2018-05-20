@@ -55,21 +55,3 @@ var time1 = wx.getStorageSync('time1') //加载开始签到时间
 if (time1 != '') {
   getApp().globalData.time1 = time1
 }
-
-//尝试从远程拉取图表数据
-try{
-  wx.request({
-    url: 'https://app.lolimay.cn/test/char.php',
-    header: {
-      'content-type': 'application/json'
-    },
-    data: {
-      stuclass: getApp().globalData.stuclass
-    },
-    success: function (res) {
-      getApp().globalData.chartData = res.data
-    }
-  })
-} catch(ex) {
-  
-}

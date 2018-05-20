@@ -2,6 +2,7 @@ import * as echarts from '../../ec-canvas/echarts';
 
 let chart = null;
 var that
+var classNum
 
 Page({
   data: {
@@ -12,7 +13,8 @@ Page({
     isLogin:'none',
     week:'#',
     hasClassInfo:false,
-    classInfo:''
+    classInfo:'',
+    canvasHeight:'200%'
   },
   onLoad() {
     console.log(getApp().globalData.stuclass)
@@ -20,8 +22,13 @@ Page({
       var info
       if (getApp().globalData.stuclass === '0') {
         info = '17级软件工程'
+        classNum = 54 //班级人数54人
       } else {
         info =  '17级地质学'
+        classNum = 40 //班级人数40人
+        this.setData({
+          canvasHeight:'148%' //根据班级人数动态加载canvas大小
+        })
       }
       this.setData({
         hasClassInfo:true,
@@ -37,11 +44,23 @@ Page({
         title: '拉取数据中',
       })
       setTimeout(function () {
-        lazyLoad(that)
-      }, 2000);
-      setTimeout(function () {
-        wx.hideLoading(loading)
-      }, 2700)
+        wx.request({
+          url: 'https://app.lolimay.cn/test/char.php',
+          header: {
+            'content-type': 'application/json'
+          },
+          data: {
+            stuclass: getApp().globalData.stuclass
+          },
+          success: function (res) {
+            getApp().globalData.chartData = res.data
+            lazyLoad(that)
+            setTimeout(function () {
+              wx.hideLoading(loading)
+            }, 1000)
+          }
+        })
+      }, 2500)
     }
   },
   onPullDownRefresh:function(){
@@ -132,7 +151,7 @@ function setOption(chart) {
       name: '姓名',
       type: 'category',
       data: names,
-      max: 55,
+      max: classNum,
       containLabel:true,
       axisLabel: {
         margin: 2,

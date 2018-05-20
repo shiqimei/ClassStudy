@@ -4,7 +4,7 @@
     <text class='chartTitle'>　　{{ classInfo}}班级自习表</text><text class="week"> 第{{ week }}周</text>
     <view><image src='/images/demo.png' class="demo"></image></view>
     </view>
-    <ec-canvas id="mychart-dom-bar" canvas-id="mychart-bar" ec="{{ ec }}"></ec-canvas>
+    <ec-canvas id="mychart-dom-bar" canvas-id="mychart-bar" ec="{{ ec }}" style="height:{{ canvasHeight }}"></ec-canvas>
 </view>
 
 <view class="container" wx:else>
