@@ -67,6 +67,7 @@ Page({
         isBinded: true,
         userInfo: getApp().globalData.userInfo
       })
+      getName(that) //获取用户姓名
     }
   },
   versionInfo: function () {
@@ -146,25 +147,20 @@ function wxLogin(that) {
     success: function (res) {
       var code = res.code;//发送给服务器的code  
       wx.getUserInfo({
-        success: function (res) {
-          var userNick = res.userInfo.nickName;//用户昵称  
-          var avataUrl = res.userInfo.avatarUrl;//用户头像地址  
-          var gender = res.userInfo.gender;//用户性别
+        success: function (res) { //如果登陆成功则开始注册
           if (code) {
             wx.request({
-              url: 'https://app.lolimay.cn/test/qd.php',
+              url: 'https://app.lolimay.cn/test/qd.php',//用于注册的php
               data: {
                 name: inputValue,
-                code: code,
-                nick: userNick,
-                avaurl: avataUrl,
-                sex: gender,
+                code: code, //openid
+                stuclass: getApp().globalData.stuclass //注册班级
               },
               header: {
                 'content-type': 'application/json'
               },
               success: function (res) {
-                //do nothing
+                console.log(res) //注册php的回调消息
               }
             })
           }
@@ -186,12 +182,12 @@ function wxLogin(that) {
 function getName(that) {
   wx.login({
     success: function (res) {
-      var code = res.code;//发送给服务器的code  
+      var code = res.code; //发送给服务器的code  
       wx.getUserInfo({
         success: function (res) {
           if (code) {
             wx.request({
-              url: 'https://app.lolimay.cn/name.php',
+              url: 'https://app.lolimay.cn/test/name.php',
               data: {
                 code: code,
                 stuclass: getApp().globalData.stuclass
@@ -200,6 +196,7 @@ function getName(that) {
                 'content-type': 'application/json'
               },
               success: function (res) {
+                console.log(res.data) //获取用户姓名回调消息
                 that.setData({
                   stuName:res.data
                 })

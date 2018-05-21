@@ -60,7 +60,7 @@ Page({
           stuAddress: '未知区域'
         })
         setTimeout(function () {
-          if (that.data.currentLocation == '生活区' || that.data.currentLocation == '未知区域') {
+          if ((that.data.currentLocation == '生活区' || that.data.currentLocation == '未知区域') && !getApp().globalData.debugMode) {
             playAudio(musicError)
             showMessage(that, '对不起,非自习区无法签到!', 'rgba(226, 88, 80,1)', 1500)
             wx.hideLoading(initLoading)
@@ -80,7 +80,7 @@ Page({
         }, 3000)
       } else {
         setTimeout(function () {
-          if (that.data.currentLocation == '生活区' || that.data.currentLocation == '未知区域') {
+          if ((that.data.currentLocation == '生活区' || that.data.currentLocation == '未知区域') && !getApp().globalData.debugMode) {
             playAudio(musicError)
             showMessage(that, '对不起,非自习区无法签退!', 'rgba(226, 88, 80,1)', 1500)
             wx.hideLoading(initLoading)
@@ -342,3 +342,4 @@ function fadeOut(that, index) {
     })
   }
 }
+

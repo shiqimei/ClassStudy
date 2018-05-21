@@ -42,7 +42,8 @@ App({
     chartData:{},
     wholeTime:'',
     isTimeSigned:false,
-    stuclass:null
+    stuclass:null,
+    debugMode: false
   }
 })
 
