@@ -1,4 +1,4 @@
-# 安大班级自助签到系统（微信小程序版）
+# 班级自助签到系统（微信小程序版）
 
 <img src="http://p40kjburh.bkt.clouddn.com/18-5-12/52016227.jpg" width="270" height="480" align=center />
 
